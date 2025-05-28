@@ -5,4 +5,5 @@ class Colours {
   final Color secondaryColor = const Color.fromARGB(255, 255, 101, 101);
   final Color textFieldLabelColor = Colors.grey;
   final Color primaryTextColor = Colors.black;
+  final Color splashBackgroudColor = Color.fromRGBO(251, 247, 236, 1);
 }
