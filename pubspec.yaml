@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   flash: ^3.1.1
   icons_plus: ^5.0.0
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:

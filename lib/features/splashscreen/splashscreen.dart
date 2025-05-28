@@ -16,9 +16,12 @@ class _SplashscreenState extends State<Splashscreen> {
   void initState() {
     super.initState();
     Timer(Duration(seconds: 3), () {
-      Navigator.of(
-        context,
-      ).pushReplacement(MaterialPageRoute(builder: (_) => Homepage()));
+      Navigator.of(context).pushReplacement(
+        PageRouteBuilder(
+          transitionDuration: Duration(milliseconds: 500),
+          pageBuilder: (context, animation, secondaryAnimation) => Homepage(),
+        ),
+      );
     });
   }
 
@@ -29,10 +32,13 @@ class _SplashscreenState extends State<Splashscreen> {
     return Scaffold(
       backgroundColor: colors.splashBackgroudColor,
       body: Center(
-        child: Image.asset(
-          "assets/images/matrimony_logo.png",
-          width: size.width * 0.5,
-          height: size.height * 0.5,
+        child: Hero(
+          tag: 'splashLogo',
+          child: Image.asset(
+            "assets/images/matrimony_logo.png",
+            width: size.width * 0.5,
+            height: size.height * 0.5,
+          ),
         ),
       ),
     );
