@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "97152258989",
+    "project_id": "matrimony--app",
+    "storage_bucket": "matrimony--app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:97152258989:android:c3ad71cc48c27d5ffe8724",
+        "android_client_info": {
+          "package_name": "com.example.matrimony"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "97152258989-tnqqb3c9agtb8jkcfff15ejdl5tti1ak.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.matrimony",
+            "certificate_hash": "858db32e334b6b233aaa7f09b487ccc087bc7d1d"
+          }
+        },
+        {
+          "client_id": "97152258989-hje08vk2qtebjq9ld8e3s1m32mi7gb46.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDELHJE4ueIRBlE9u3qdpnJUNUvmoAEWEc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "97152258989-hje08vk2qtebjq9ld8e3s1m32mi7gb46.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
