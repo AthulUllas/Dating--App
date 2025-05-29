@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Fontstyle {
@@ -8,5 +8,19 @@ class Fontstyle {
 
   final authHeadingStyle = GoogleFonts.macondo(
     textStyle: TextStyle(fontSize: 28),
+  );
+
+  final buttonTextStyle = GoogleFonts.mandali(
+    textStyle: TextStyle(
+      color: Colors.white,
+      fontSize: 16,
+      fontWeight: FontWeight.bold,
+    ),
+  );
+
+  final snackBarTextStyle = GoogleFonts.mandali(
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
+    color: Colors.black,
   );
 }

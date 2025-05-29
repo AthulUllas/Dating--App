@@ -1,9 +1,11 @@
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:matrimony/utils/colors.dart';
+import 'package:matrimony/utils/fontstyle.dart';
 
 Future<void> snackBar(String message, BuildContext context) async {
   final colors = Colours();
+  final fontStyles = Fontstyle();
   showFlash(
     context: context,
     duration: Duration(seconds: 1),
@@ -16,11 +18,7 @@ Future<void> snackBar(String message, BuildContext context) async {
             child: Text(message),
           ),
         ),
-        contentTextStyle: TextStyle(
-          fontSize: 18,
-          color: colors.primaryTextColor,
-          fontWeight: FontWeight.bold,
-        ),
+        contentTextStyle: fontStyles.snackBarTextStyle,
         position: FlashPosition.top,
         behavior: FlashBehavior.floating,
         margin: EdgeInsets.only(left: 20, right: 20, top: 24),
