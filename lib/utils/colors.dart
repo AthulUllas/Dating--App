@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 
 class Colours {
   final Color primaryColor = const Color.fromARGB(255, 234, 141, 20);
-  final Color secondaryColor = const Color.fromARGB(255, 255, 101, 101);
+  final Color secondaryColor = const Color.fromARGB(255, 255, 79, 79);
   final Color textFieldLabelColor = Colors.grey;
   final Color primaryTextColor = Colors.black;
   final Color splashBackgroudColor = Color.fromRGBO(251, 247, 236, 1);
+  final Color scaffoldBackgroundColor = const Color.fromARGB(
+    255,
+    250,
+    240,
+    220,
+  );
+  final Color white = Colors.white;
 }

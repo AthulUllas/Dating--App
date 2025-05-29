@@ -18,7 +18,7 @@ class _SplashscreenState extends State<Splashscreen> {
     Timer(Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
         PageRouteBuilder(
-          transitionDuration: Duration(milliseconds: 500),
+          transitionDuration: Duration(milliseconds: 700),
           pageBuilder: (context, animation, secondaryAnimation) => Homepage(),
         ),
       );

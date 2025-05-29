@@ -1,8 +1,17 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:matrimony/features/splashscreen/splashscreen.dart';
+import 'package:matrimony/features/auth/view/pages/signuppage.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: FirebaseOptions(
+      apiKey: "AIzaSyDELHJE4ueIRBlE9u3qdpnJUNUvmoAEWEc",
+      appId: "1:97152258989:android:c3ad71cc48c27d5ffe8724",
+      messagingSenderId: "97152258989",
+      projectId: "matrimony--app",
+    ),
+  );
   runApp(const MyApp());
 }
 
@@ -14,7 +23,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Matrimony App',
       debugShowCheckedModeBanner: false,
-      home: Splashscreen(),
+      home: Signuppage(),
     );
   }
 }

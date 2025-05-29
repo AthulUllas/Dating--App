@@ -5,4 +5,8 @@ class Fontstyle {
   final appBarTitleStyle = GoogleFonts.macondo(
     textStyle: TextStyle(fontSize: 22),
   );
+
+  final authHeadingStyle = GoogleFonts.macondo(
+    textStyle: TextStyle(fontSize: 28),
+  );
 }

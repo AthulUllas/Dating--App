@@ -10,6 +10,7 @@ class Homepage extends StatelessWidget {
     final textStyle = Fontstyle();
     final colors = Colours();
     return Scaffold(
+      backgroundColor: colors.scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: colors.primaryColor,
         title: Row(
