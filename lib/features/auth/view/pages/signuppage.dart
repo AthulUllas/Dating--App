@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:matrimony/features/auth/helper/is_email_helper.dart';
 import 'package:matrimony/features/auth/service/firebase_services.dart';
+import 'package:matrimony/features/auth/view/pages/signin_page.dart';
 import 'package:matrimony/features/auth/view/widgets/textfield_widget.dart';
 import 'package:matrimony/utils/colors.dart';
 import 'package:matrimony/utils/dimensions.dart';
@@ -58,11 +59,10 @@ class Signuppage extends HookWidget {
                         FirebaseAuth.instance.currentUser?.emailVerified ??
                         false;
                     if (isVerified) {
-                      debugPrint(
-                        "<----------------------------Verified--------------------------->",
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => SigninPage()),
                       );
-                      emailController.clear();
-                      passwordController.clear();
                     } else {
                       authServices.createUser(
                         emailController.text.trim(),

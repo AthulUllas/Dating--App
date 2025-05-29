@@ -15,4 +15,21 @@ class FirebaseServices {
       snackBar(e.toString(), context);
     }
   }
+
+  Future<bool> signInUser(
+    String email,
+    String password,
+    BuildContext context,
+  ) async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      return true;
+    } on FirebaseAuthException catch (e) {
+      snackBar(e.toString(), context);
+      return false;
+    }
+  }
 }
