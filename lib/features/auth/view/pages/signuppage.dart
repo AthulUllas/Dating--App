@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:matrimony/features/auth/helper/is_email_helper.dart';
 import 'package:matrimony/features/auth/service/firebase_services.dart';
@@ -8,7 +10,7 @@ import 'package:matrimony/utils/dimensions.dart';
 import 'package:matrimony/utils/fontstyle.dart';
 import 'package:matrimony/utils/snackbar.dart';
 
-class Signuppage extends StatelessWidget {
+class Signuppage extends HookWidget {
   const Signuppage({super.key});
 
   @override
@@ -16,8 +18,8 @@ class Signuppage extends StatelessWidget {
     final colors = Colours();
     final styles = Fontstyle();
     final size = MediaQuery.of(context).size;
-    final emailController = TextEditingController();
-    final passwordController = TextEditingController();
+    final emailController = useTextEditingController();
+    final passwordController = useTextEditingController();
     final sides = Dimensions();
     final authServices = FirebaseServices();
     return Scaffold(
@@ -47,15 +49,27 @@ class Signuppage extends StatelessWidget {
               hint: "Password",
             ),
             GestureDetector(
-              onTap: () {
+              onTap: () async {
                 final isEmailValid = isValidEmail(emailController.text);
                 if (isEmailValid) {
                   if (passwordController.text.isNotEmpty) {
-                    authServices.createUser(
-                      emailController.text,
-                      passwordController.text,
-                      context,
-                    );
+                    await FirebaseAuth.instance.currentUser?.reload();
+                    bool isVerified =
+                        FirebaseAuth.instance.currentUser?.emailVerified ??
+                        false;
+                    if (isVerified) {
+                      debugPrint(
+                        "<----------------------------Verified--------------------------->",
+                      );
+                      emailController.clear();
+                      passwordController.clear();
+                    } else {
+                      authServices.createUser(
+                        emailController.text.trim(),
+                        passwordController.text.trim(),
+                        context,
+                      );
+                    }
                   } else {
                     snackBar("Password empty", context);
                   }
