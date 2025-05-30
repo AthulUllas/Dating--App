@@ -5,6 +5,8 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:matrimony/features/auth/helper/is_email_helper.dart';
 import 'package:matrimony/features/auth/service/firebase_services.dart';
 import 'package:matrimony/features/auth/view/pages/signin_page.dart';
+import 'package:matrimony/features/auth/view/widgets/google_signin_button.dart';
+import 'package:matrimony/features/auth/view/widgets/logo_head.dart';
 import 'package:matrimony/features/auth/view/widgets/textfield_widget.dart';
 import 'package:matrimony/utils/colors.dart';
 import 'package:matrimony/utils/dimensions.dart';
@@ -31,16 +33,7 @@ class Signuppage extends HookWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             SizedBox(height: size.height * 0.2),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  "assets/images/matrimony_logo.png",
-                  width: size.width * 0.2,
-                ),
-                Text("Matrimony", style: styles.authHeadingStyle),
-              ],
-            ),
+            LogoHead(),
             SizedBox(height: 10),
             TextfieldWidget(
               trailing: Icon(Clarity.email_line),
@@ -133,24 +126,7 @@ class Signuppage extends HookWidget {
               onTap: () {
                 authServices.signInWithGoogle(context);
               },
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(width: 1, color: colors.secondaryColor),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                height: 50,
-                margin: sides.primaryPadding,
-                child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Brand(Brands.google, size: 28),
-                      SizedBox(width: 10),
-                      Text("Google", style: styles.googleButtonTextStyle),
-                    ],
-                  ),
-                ),
-              ),
+              child: GoogleSigninButton(),
             ),
             SizedBox(height: size.height * 0.25),
           ],
