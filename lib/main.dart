@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:matrimony/features/auth/view/pages/signuppage.dart';
+import 'package:matrimony/features/splashscreen/splashscreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Matrimony App',
       debugShowCheckedModeBanner: false,
-      home: Signuppage(),
+      home: Splashscreen(),
     );
   }
 }

@@ -1,13 +1,14 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:matrimony/features/auth/helper/is_email_helper.dart';
 import 'package:matrimony/features/auth/service/firebase_services.dart';
 import 'package:matrimony/features/auth/view/pages/signin_page.dart';
+import 'package:matrimony/features/auth/view/widgets/continue_button.dart';
 import 'package:matrimony/features/auth/view/widgets/google_signin_button.dart';
 import 'package:matrimony/features/auth/view/widgets/logo_head.dart';
 import 'package:matrimony/features/auth/view/widgets/textfield_widget.dart';
+import 'package:matrimony/features/homepage/views/pages/homepage.dart';
 import 'package:matrimony/utils/colors.dart';
 import 'package:matrimony/utils/dimensions.dart';
 import 'package:matrimony/utils/fontstyle.dart';
@@ -19,20 +20,28 @@ class Signuppage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Colours();
-    final styles = Fontstyle();
     final size = MediaQuery.of(context).size;
     final emailController = useTextEditingController();
     final passwordController = useTextEditingController();
     final sides = Dimensions();
     final authServices = FirebaseServices();
     final isVisible = useState(false);
+    final styles = Fontstyle();
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Sign Up", style: styles.appBarTitleStyle),
+        centerTitle: true,
+        backgroundColor: colors.scaffoldBackgroundColor,
+        shape: Border(
+          bottom: BorderSide(color: colors.textFieldLabelColor, width: 0.3),
+        ),
+      ),
       backgroundColor: colors.scaffoldBackgroundColor,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            SizedBox(height: size.height * 0.2),
+            SizedBox(height: size.height * 0.1),
             LogoHead(),
             SizedBox(height: 10),
             TextfieldWidget(
@@ -83,52 +92,45 @@ class Signuppage extends HookWidget {
               onTap: () async {
                 final isEmailValid = isValidEmail(emailController.text);
                 if (isEmailValid) {
-                  if (passwordController.text.isNotEmpty) {
-                    await FirebaseAuth.instance.currentUser?.reload();
-                    bool isVerified =
-                        FirebaseAuth.instance.currentUser?.emailVerified ??
-                        false;
-                    if (isVerified) {
+                  if (passwordController.text.trim().length > 5) {
+                    final isUserCreated = authServices.createUser(
+                      emailController.text.trim(),
+                      passwordController.text.trim(),
+                      context,
+                    );
+                    if (await isUserCreated) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (_) => SigninPage()),
                       );
-                    } else {
-                      authServices.createUser(
-                        emailController.text.trim(),
-                        passwordController.text.trim(),
-                        context,
-                      );
                     }
                   } else {
-                    snackBar("Password empty", context, 2);
+                    snackBar("Password atleast 6 characters", context, 2);
                   }
                 } else {
                   snackBar("Enter the correct email", context, 2);
                 }
               },
-              child: Container(
-                decoration: BoxDecoration(
-                  color: colors.buttonColor,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                margin: sides.primaryPadding,
-                height: 50,
-                child: Center(
-                  child: Text("Continue", style: styles.buttonTextStyle),
-                ),
-              ),
+              child: ContinueButton(),
             ),
             SizedBox(height: 10),
             Divider(),
             SizedBox(height: 10),
             GestureDetector(
-              onTap: () {
-                authServices.signInWithGoogle(context);
+              onTap: () async {
+                final isSignedIn = authServices.signInWithGoogle(context);
+                if (await isSignedIn) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => Homepage()),
+                  );
+                } else {
+                  snackBar("Login failed", context, 1);
+                }
               },
               child: GoogleSigninButton(),
             ),
-            SizedBox(height: size.height * 0.25),
+            SizedBox(height: size.height * 0.3),
           ],
         ),
       ),

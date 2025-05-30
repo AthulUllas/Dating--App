@@ -4,16 +4,23 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:matrimony/utils/snackbar.dart';
 
 class FirebaseServices {
-  void createUser(String email, String password, BuildContext context) async {
+  Future<bool> createUser(
+    String email,
+    String password,
+    BuildContext context,
+  ) async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
       await FirebaseAuth.instance.currentUser?.sendEmailVerification();
-      snackBar("Verify email and continue again", context, 2);
+      snackBar("Verify email and Sign In", context, 2);
+      await FirebaseAuth.instance.currentUser?.reload();
+      return true;
     } catch (e) {
       snackBar(e.toString(), context, 2);
+      return false;
     }
   }
 
@@ -34,7 +41,7 @@ class FirebaseServices {
     }
   }
 
-  Future<UserCredential?> signInWithGoogle(BuildContext context) async {
+  Future<bool> signInWithGoogle(BuildContext context) async {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       if (googleUser == null) {
@@ -48,10 +55,11 @@ class FirebaseServices {
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-      return await FirebaseAuth.instance.signInWithCredential(credential);
+      await FirebaseAuth.instance.signInWithCredential(credential);
+      return true;
     } catch (e) {
       snackBar(e.toString(), context, 5);
-      return null;
+      return false;
     }
   }
 }

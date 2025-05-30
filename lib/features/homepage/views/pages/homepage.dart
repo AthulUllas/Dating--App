@@ -15,10 +15,7 @@ class Homepage extends StatelessWidget {
         backgroundColor: colors.primaryColor,
         title: Row(
           children: [
-            Hero(
-              tag: 'splashLogo',
-              child: Image.asset("assets/images/matrimony_logo.png", scale: 16),
-            ),
+            Image.asset("assets/images/matrimony_logo.png", scale: 16),
             Text("Matrimony", style: textStyle.appBarTitleStyle),
           ],
         ),
