@@ -23,12 +23,14 @@ class Signuppage extends HookWidget {
     final passwordController = useTextEditingController();
     final sides = Dimensions();
     final authServices = FirebaseServices();
+    final isVisible = useState(false);
     return Scaffold(
       backgroundColor: colors.scaffoldBackgroundColor,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+            SizedBox(height: size.height * 0.25),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -39,15 +41,50 @@ class Signuppage extends HookWidget {
                 Text("Matrimony", style: styles.authHeadingStyle),
               ],
             ),
+            SizedBox(height: 10),
             TextfieldWidget(
               trailing: Icon(Clarity.email_line),
               controller: emailController,
               hint: "E-mail",
             ),
-            TextfieldWidget(
-              trailing: Icon(Clarity.lock_line),
-              controller: passwordController,
-              hint: "Password",
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: colors.secondaryColor, width: 1),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              height: 60,
+              margin: sides.primaryPadding,
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16.0),
+                    child: Icon(Clarity.lock_line),
+                  ),
+                  SizedBox(width: 20),
+                  Expanded(
+                    child: TextField(
+                      obscureText: isVisible.value ? false : true,
+                      controller: passwordController,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Password",
+                        hintStyle: TextStyle(color: colors.hintColor),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 4.0),
+                    child: IconButton(
+                      onPressed: () {
+                        isVisible.value = !isVisible.value;
+                      },
+                      icon: isVisible.value
+                          ? Icon(Clarity.eye_hide_line)
+                          : Icon(Clarity.eye_line),
+                    ),
+                  ),
+                ],
+              ),
             ),
             GestureDetector(
               onTap: () async {
@@ -71,10 +108,10 @@ class Signuppage extends HookWidget {
                       );
                     }
                   } else {
-                    snackBar("Password empty", context);
+                    snackBar("Password empty", context, 2);
                   }
                 } else {
-                  snackBar("Enter the correct email", context);
+                  snackBar("Enter the correct email", context, 2);
                 }
               },
               child: Container(
@@ -89,6 +126,7 @@ class Signuppage extends HookWidget {
                 ),
               ),
             ),
+            SizedBox(height: size.height * 0.3),
           ],
         ),
       ),

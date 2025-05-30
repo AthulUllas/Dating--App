@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:matrimony/utils/colors.dart';
 import 'package:matrimony/utils/fontstyle.dart';
 
-Future<void> snackBar(String message, BuildContext context) async {
+Future<void> snackBar(String message, BuildContext context, int time) async {
   final colors = Colours();
   final fontStyles = Fontstyle();
   showFlash(
     context: context,
-    duration: Duration(seconds: 1),
+    duration: Duration(seconds: time),
     builder: (context, controller) {
       return FlashBar(
         controller: controller,
