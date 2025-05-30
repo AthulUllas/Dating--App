@@ -30,7 +30,7 @@ class Signuppage extends HookWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            SizedBox(height: size.height * 0.25),
+            SizedBox(height: size.height * 0.2),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -126,7 +126,33 @@ class Signuppage extends HookWidget {
                 ),
               ),
             ),
-            SizedBox(height: size.height * 0.3),
+            SizedBox(height: 10),
+            Divider(),
+            SizedBox(height: 10),
+            GestureDetector(
+              onTap: () {
+                authServices.signInWithGoogle(context);
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(width: 1, color: colors.secondaryColor),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                height: 50,
+                margin: sides.primaryPadding,
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Brand(Brands.google, size: 28),
+                      SizedBox(width: 10),
+                      Text("Google", style: styles.googleButtonTextStyle),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: size.height * 0.25),
           ],
         ),
       ),

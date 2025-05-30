@@ -18,6 +18,14 @@ class Fontstyle {
     ),
   );
 
+  final googleButtonTextStyle = GoogleFonts.mandali(
+    textStyle: TextStyle(
+      color: Colors.black,
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+    ),
+  );
+
   final snackBarTextStyle = GoogleFonts.mandali(
     fontSize: 18,
     fontWeight: FontWeight.bold,
