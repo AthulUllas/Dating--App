@@ -33,6 +33,7 @@ class Homepage extends StatelessWidget {
             icon: Icon(Clarity.logout_line),
           ),
         ],
+        automaticallyImplyLeading: false,
       ),
     );
   }

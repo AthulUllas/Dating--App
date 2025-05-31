@@ -1,3 +1,5 @@
+import 'package:animations/animations.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -99,9 +101,22 @@ class SigninPage extends HookWidget {
                       context,
                     );
                     if (await isSignedIn) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => Homepage()),
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                                  Homepage(),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                                return SharedAxisTransition(
+                                  animation: animation,
+                                  secondaryAnimation: secondaryAnimation,
+                                  transitionType:
+                                      SharedAxisTransitionType.horizontal,
+                                  child: child,
+                                );
+                              },
+                        ),
                       );
                       snackBar("Signed In", context, 1);
                     }
@@ -120,13 +135,38 @@ class SigninPage extends HookWidget {
                   context,
                 );
                 if (isGoogleSignedIn) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => Homepage()),
+                  Navigator.of(context).push(
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          Homepage(),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                            return SharedAxisTransition(
+                              animation: animation,
+                              secondaryAnimation: secondaryAnimation,
+                              transitionType:
+                                  SharedAxisTransitionType.horizontal,
+                              child: child,
+                            );
+                          },
+                    ),
                   );
                 } else {
                   snackBar("Error signing in", context, 2);
                 }
+                final currentUser = FirebaseAuth.instance.currentUser;
+                debugPrint(
+                  "<----------------------------------------------------${currentUser?.displayName}--------------------------------->",
+                );
+                debugPrint(
+                  "<-------------------------${currentUser?.photoURL}-------------------->",
+                );
+                debugPrint(
+                  "<---------------------------------------------------------${currentUser?.phoneNumber}------------------------------------------->",
+                );
+                debugPrint(
+                  "<---------------------------${currentUser?.providerData}---------------------------->",
+                );
               },
               child: GoogleSigninButton(),
             ),
@@ -143,9 +183,21 @@ class SigninPage extends HookWidget {
                 SizedBox(width: 5),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => Signuppage()),
+                    Navigator.of(context).push(
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            Signuppage(),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                              return SharedAxisTransition(
+                                animation: animation,
+                                secondaryAnimation: secondaryAnimation,
+                                transitionType:
+                                    SharedAxisTransitionType.horizontal,
+                                child: child,
+                              );
+                            },
+                      ),
                     );
                   },
                   child: Text(

@@ -43,6 +43,7 @@ dependencies:
   flutter_hooks: ^0.21.2
   flutter_riverpod: ^2.6.1
   google_sign_in: ^6.3.0
+  animations: ^2.0.11
 
 dev_dependencies:
   flutter_test:
@@ -69,14 +70,6 @@ flutter:
   assets:
     - assets/images/
   #   - images/a_dot_ham.jpeg
-
-flutter_native_splash:
-  color: "#fbf7ec"
-  image: assets/images/matrimony_logo.png
-  android_gravity: center
-  ios_content_mode: center
-  android: true
-  ios: true
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

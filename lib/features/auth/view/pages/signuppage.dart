@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -34,6 +35,15 @@ class Signuppage extends HookWidget {
         backgroundColor: colors.scaffoldBackgroundColor,
         shape: Border(
           bottom: BorderSide(color: colors.textFieldLabelColor, width: 0.3),
+        ),
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 8),
+          child: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: Icon(Clarity.close_line),
+          ),
         ),
       ),
       backgroundColor: colors.scaffoldBackgroundColor,
@@ -99,9 +109,22 @@ class Signuppage extends HookWidget {
                       context,
                     );
                     if (await isUserCreated) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => SigninPage()),
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                                  SigninPage(),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                                return SharedAxisTransition(
+                                  animation: animation,
+                                  secondaryAnimation: secondaryAnimation,
+                                  transitionType:
+                                      SharedAxisTransitionType.horizontal,
+                                  child: child,
+                                );
+                              },
+                        ),
                       );
                     }
                   } else {
@@ -120,9 +143,21 @@ class Signuppage extends HookWidget {
               onTap: () async {
                 final isSignedIn = await authServices.signInWithGoogle(context);
                 if (isSignedIn) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => Homepage()),
+                  Navigator.of(context).push(
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          Homepage(),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                            return SharedAxisTransition(
+                              animation: animation,
+                              secondaryAnimation: secondaryAnimation,
+                              transitionType:
+                                  SharedAxisTransitionType.horizontal,
+                              child: child,
+                            );
+                          },
+                    ),
                   );
                 } else {
                   snackBar("Login failed", context, 1);
