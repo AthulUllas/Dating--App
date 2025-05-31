@@ -15,4 +15,5 @@ class Colours {
   );
   final Color hintColor = Colors.grey;
   final Color buttonColor = const Color.fromARGB(255, 35, 51, 138);
+  final Color buttonBorderColor = Colors.black;
 }

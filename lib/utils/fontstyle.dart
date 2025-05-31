@@ -31,4 +31,8 @@ class Fontstyle {
     fontWeight: FontWeight.bold,
     color: Colors.black,
   );
+
+  final genderButtonTextStyle = GoogleFonts.mandali(
+    fontWeight: FontWeight.bold,
+  );
 }

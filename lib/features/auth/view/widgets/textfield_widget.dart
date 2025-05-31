@@ -8,11 +8,13 @@ class TextfieldWidget extends StatelessWidget {
     required this.trailing,
     required this.controller,
     required this.hint,
+    required this.type,
   });
 
   final Widget trailing;
   final TextEditingController controller;
   final String hint;
+  final TextInputType type;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +33,7 @@ class TextfieldWidget extends StatelessWidget {
           SizedBox(width: 20),
           Expanded(
             child: TextField(
+              keyboardType: type,
               controller: controller,
               decoration: InputDecoration(
                 border: InputBorder.none,
