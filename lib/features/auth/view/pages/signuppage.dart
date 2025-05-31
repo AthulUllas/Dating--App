@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -100,7 +101,7 @@ class Signuppage extends HookWidget {
             ),
             GestureDetector(
               onTap: () async {
-                final isEmailValid = isValidEmail(emailController.text);
+                final isEmailValid = isValidEmail(emailController.text.trim());
                 if (isEmailValid) {
                   if (passwordController.text.trim().length > 5) {
                     final isUserCreated = authServices.createUser(
@@ -109,7 +110,7 @@ class Signuppage extends HookWidget {
                       context,
                     );
                     if (await isUserCreated) {
-                      Navigator.of(context).push(
+                      Navigator.of(context).pushAndRemoveUntil(
                         PageRouteBuilder(
                           pageBuilder:
                               (context, animation, secondaryAnimation) =>
@@ -125,13 +126,24 @@ class Signuppage extends HookWidget {
                                 );
                               },
                         ),
+                        (route) => false,
                       );
                     }
                   } else {
-                    snackBar("Password atleast 6 characters", context, 2);
+                    snackBar(
+                      "Password atleast 6 characters",
+                      context,
+                      2,
+                      FlashPosition.top,
+                    );
                   }
                 } else {
-                  snackBar("Enter the correct email", context, 2);
+                  snackBar(
+                    "Enter the correct email",
+                    context,
+                    2,
+                    FlashPosition.top,
+                  );
                 }
               },
               child: ContinueButton(),
@@ -160,7 +172,7 @@ class Signuppage extends HookWidget {
                     ),
                   );
                 } else {
-                  snackBar("Login failed", context, 1);
+                  snackBar("Login failed", context, 1, FlashPosition.top);
                 }
               },
               child: GoogleSigninButton(),

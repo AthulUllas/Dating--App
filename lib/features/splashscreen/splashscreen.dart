@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:matrimony/features/auth/view/pages/signin_page.dart';
+import 'package:matrimony/features/homepage/views/pages/homepage.dart';
 import 'package:matrimony/utils/colors.dart';
 
 class Splashscreen extends StatefulWidget {
@@ -11,6 +13,7 @@ class Splashscreen extends StatefulWidget {
 }
 
 class _SplashscreenState extends State<Splashscreen> {
+  final isLoggedIn = (FirebaseAuth.instance.currentUser != null) ? true : false;
   @override
   void initState() {
     super.initState();
@@ -18,7 +21,8 @@ class _SplashscreenState extends State<Splashscreen> {
       Navigator.of(context).pushReplacement(
         PageRouteBuilder(
           transitionDuration: Duration(milliseconds: 500),
-          pageBuilder: (context, animation, secondaryAnimation) => SigninPage(),
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              isLoggedIn ? Homepage() : SigninPage(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             const begin = Offset(1.0, 0.0);
             const end = Offset.zero;

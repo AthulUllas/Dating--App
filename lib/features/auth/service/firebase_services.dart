@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flash/flash.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:matrimony/utils/snackbar.dart';
@@ -16,11 +17,11 @@ class FirebaseServices {
         password: password,
       );
       await FirebaseAuth.instance.currentUser?.sendEmailVerification();
-      snackBar("Verify email and Sign In", context, 2);
+      snackBar("Verify email and Sign In", context, 2, FlashPosition.top);
       await FirebaseAuth.instance.currentUser?.reload();
       return true;
     } catch (e) {
-      snackBar(e.toString(), context, 2);
+      snackBar(e.toString(), context, 2, FlashPosition.top);
       return false;
     }
   }
@@ -37,7 +38,7 @@ class FirebaseServices {
       );
       return true;
     } catch (e) {
-      snackBar(e.toString(), context, 2);
+      snackBar(e.toString(), context, 2, FlashPosition.top);
       return false;
     }
   }
@@ -47,7 +48,7 @@ class FirebaseServices {
       await googleSignIn.signOut();
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       if (googleUser == null) {
-        snackBar("Cancelled", context, 1);
+        snackBar("Cancelled", context, 1, FlashPosition.bottom);
         return false;
       }
 
@@ -62,7 +63,7 @@ class FirebaseServices {
       // return userCredential;
       return true;
     } catch (e) {
-      snackBar(e.toString(), context, 5);
+      snackBar(e.toString(), context, 5, FlashPosition.top);
       return false;
     }
   }

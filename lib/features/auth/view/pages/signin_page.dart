@@ -1,5 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -92,7 +93,9 @@ class SigninPage extends HookWidget {
             ),
             GestureDetector(
               onTap: () async {
-                final isEmailValid = isValidEmail(signInEmailController.text);
+                final isEmailValid = isValidEmail(
+                  signInEmailController.text.trim(),
+                );
                 if (isEmailValid) {
                   if (signInPasswordController.text.trim().length > 5) {
                     final isSignedIn = authServices.signInUser(
@@ -118,13 +121,23 @@ class SigninPage extends HookWidget {
                               },
                         ),
                       );
-                      snackBar("Signed In", context, 1);
+                      snackBar("Signed In", context, 1, FlashPosition.bottom);
                     }
                   } else {
-                    snackBar("Password atleast 6 character", context, 2);
+                    snackBar(
+                      "Password atleast 6 character",
+                      context,
+                      2,
+                      FlashPosition.top,
+                    );
                   }
                 } else {
-                  snackBar("Enter correct email", context, 1);
+                  snackBar(
+                    "Enter correct email",
+                    context,
+                    1,
+                    FlashPosition.top,
+                  );
                 }
               },
               child: ContinueButton(),
@@ -152,7 +165,7 @@ class SigninPage extends HookWidget {
                     ),
                   );
                 } else {
-                  snackBar("Error signing in", context, 2);
+                  snackBar("Error signing in", context, 2, FlashPosition.top);
                 }
                 final currentUser = FirebaseAuth.instance.currentUser;
                 debugPrint(
