@@ -4,6 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:matrimony/utils/snackbar.dart';
 
 class FirebaseServices {
+  final GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
   Future<bool> createUser(
     String email,
     String password,
@@ -43,19 +44,22 @@ class FirebaseServices {
 
   Future<bool> signInWithGoogle(BuildContext context) async {
     try {
+      await googleSignIn.signOut();
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       if (googleUser == null) {
         snackBar("Cancelled", context, 1);
+        return false;
       }
 
       final GoogleSignInAuthentication googleAuth =
-          await googleUser!.authentication;
+          await googleUser.authentication;
 
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
       await FirebaseAuth.instance.signInWithCredential(credential);
+      // return userCredential;
       return true;
     } catch (e) {
       snackBar(e.toString(), context, 5);

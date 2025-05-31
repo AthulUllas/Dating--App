@@ -116,8 +116,10 @@ class SigninPage extends HookWidget {
             ),
             GestureDetector(
               onTap: () async {
-                final isGoogleSignedIn = authServices.signInWithGoogle(context);
-                if (await isGoogleSignedIn) {
+                final isGoogleSignedIn = await authServices.signInWithGoogle(
+                  context,
+                );
+                if (isGoogleSignedIn) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (_) => Homepage()),

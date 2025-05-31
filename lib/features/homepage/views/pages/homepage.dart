@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:matrimony/utils/colors.dart';
 import 'package:matrimony/utils/fontstyle.dart';
 
@@ -22,6 +24,15 @@ class Homepage extends StatelessWidget {
         shape: Border(
           bottom: BorderSide(color: colors.secondaryColor, width: 1),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              FirebaseAuth.instance.signOut();
+              Navigator.of(context).pop();
+            },
+            icon: Icon(Clarity.logout_line),
+          ),
+        ],
       ),
     );
   }

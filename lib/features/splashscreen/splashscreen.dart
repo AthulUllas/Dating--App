@@ -17,7 +17,7 @@ class _SplashscreenState extends State<Splashscreen> {
     Timer(Duration(seconds: 2), () {
       Navigator.of(context).pushReplacement(
         PageRouteBuilder(
-          transitionDuration: Duration(milliseconds: 1500),
+          transitionDuration: Duration(milliseconds: 500),
           pageBuilder: (context, animation, secondaryAnimation) => SigninPage(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             const begin = Offset(1.0, 0.0);
