@@ -7,6 +7,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   GetStorage.init('name');
   GetStorage.init('phone');
+  GetStorage.init('gender');
   await Firebase.initializeApp(
     options: FirebaseOptions(
       apiKey: "AIzaSyDELHJE4ueIRBlE9u3qdpnJUNUvmoAEWEc",
