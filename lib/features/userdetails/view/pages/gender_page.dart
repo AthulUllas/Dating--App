@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:matrimony/features/auth/service/database_service.dart';
 import 'package:matrimony/features/auth/view/widgets/continue_button.dart';
 import 'package:matrimony/features/userdetails/services/getstorage_service.dart';
 import 'package:matrimony/features/userdetails/view/widgets/gender_button.dart';
@@ -21,6 +22,7 @@ class GenderPage extends HookWidget {
     final isMaleTapped = useState(false);
     final isFemaleTapped = useState(false);
     final isOtherTapped = useState(false);
+    final databaseServices = DatabaseServices();
     return Scaffold(
       backgroundColor: colors.scaffoldBackgroundColor,
       body: Center(
@@ -126,6 +128,10 @@ class GenderPage extends HookWidget {
                     gender = "Other";
                   }
                   saveGender(gender);
+                  databaseServices.updateGenderInDatabase(
+                    gender.toString(),
+                    context,
+                  );
                 }
               },
               child: ContinueButton(),

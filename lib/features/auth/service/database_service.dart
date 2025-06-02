@@ -30,4 +30,44 @@ class DatabaseServices {
       snackBar("Please login first", context, 1, FlashPosition.top);
     }
   }
+
+  Future<void> updateNameAndPhoneInDatabase(
+    String name,
+    String phone,
+    BuildContext context,
+  ) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      try {
+        final uid = user.uid;
+        FirebaseFirestore.instance.collection('users').doc(uid).update({
+          'name': name,
+          'phone': phone,
+        });
+      } catch (e) {
+        debugPrint(e.toString());
+      }
+    } else {
+      snackBar("Please login first", context, 1, FlashPosition.top);
+    }
+  }
+
+  Future<void> updateGenderInDatabase(
+    String gender,
+    BuildContext context,
+  ) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      try {
+        final uid = user.uid;
+        FirebaseFirestore.instance.collection('users').doc(uid).update({
+          'gender': gender,
+        });
+      } catch (e) {
+        debugPrint(e.toString());
+      }
+    } else {
+      snackBar("Please login first", context, 1, FlashPosition.top);
+    }
+  }
 }

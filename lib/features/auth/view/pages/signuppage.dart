@@ -63,6 +63,7 @@ class Signuppage extends HookWidget {
               hint: "E-mail",
               type: TextInputType.emailAddress,
             ),
+            SizedBox(height: 3),
             Container(
               decoration: BoxDecoration(
                 border: Border.all(color: colors.secondaryColor, width: 1),
@@ -102,6 +103,7 @@ class Signuppage extends HookWidget {
                 ],
               ),
             ),
+            SizedBox(height: 3),
             GestureDetector(
               onTap: () async {
                 final isEmailValid = isValidEmail(emailController.text.trim());
