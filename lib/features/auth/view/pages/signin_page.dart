@@ -6,6 +6,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:matrimony/features/auth/helper/is_email_helper.dart';
+import 'package:matrimony/features/auth/service/database_service.dart';
 import 'package:matrimony/features/auth/service/firebase_services.dart';
 import 'package:matrimony/features/auth/view/pages/signuppage.dart';
 import 'package:matrimony/features/auth/view/widgets/continue_button.dart';
@@ -25,6 +26,7 @@ class SigninPage extends HookWidget {
   Widget build(BuildContext context) {
     final colors = Colours();
     final styles = Fontstyle();
+    final databaseServices = DatabaseServices();
     final signInEmailController = useTextEditingController();
     final signInPasswordController = useTextEditingController();
     final isVisible = useState(false);
@@ -164,6 +166,14 @@ class SigninPage extends HookWidget {
                             );
                           },
                     ),
+                  );
+                  final user = FirebaseAuth.instance.currentUser;
+                  databaseServices.registerUserInDatabase(
+                    user!.email.toString(),
+                    context,
+                    user.displayName,
+                    user.phoneNumber,
+                    "No gender",
                   );
                 } else {
                   snackBar("Error signing in", context, 2, FlashPosition.top);

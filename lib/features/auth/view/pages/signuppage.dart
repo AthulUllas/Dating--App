@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:matrimony/features/auth/helper/is_email_helper.dart';
+import 'package:matrimony/features/auth/service/database_service.dart';
 import 'package:matrimony/features/auth/service/firebase_services.dart';
 import 'package:matrimony/features/auth/view/pages/signin_page.dart';
 import 'package:matrimony/features/auth/view/widgets/continue_button.dart';
@@ -29,6 +30,7 @@ class Signuppage extends HookWidget {
     final authServices = FirebaseServices();
     final isVisible = useState(false);
     final styles = Fontstyle();
+    final databaseServices = DatabaseServices();
     return Scaffold(
       appBar: AppBar(
         title: Text("Sign Up", style: styles.appBarTitleStyle),
@@ -111,7 +113,7 @@ class Signuppage extends HookWidget {
                       context,
                     );
                     if (await isUserCreated) {
-                      Navigator.of(context).pushAndRemoveUntil(
+                      Navigator.of(context).pushReplacement(
                         PageRouteBuilder(
                           pageBuilder:
                               (context, animation, secondaryAnimation) =>
@@ -127,7 +129,13 @@ class Signuppage extends HookWidget {
                                 );
                               },
                         ),
-                        (route) => false,
+                      );
+                      databaseServices.registerUserInDatabase(
+                        emailController.text,
+                        context,
+                        "No name",
+                        "No number",
+                        "No gender",
                       );
                     }
                   } else {

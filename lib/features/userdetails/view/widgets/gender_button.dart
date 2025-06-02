@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:matrimony/utils/colors.dart';
 
 class GenderButton extends StatelessWidget {
   const GenderButton({

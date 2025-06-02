@@ -19,6 +19,7 @@ class FirebaseServices {
       await FirebaseAuth.instance.currentUser?.sendEmailVerification();
       snackBar("Verify email and Sign In", context, 2, FlashPosition.top);
       await FirebaseAuth.instance.currentUser?.reload();
+
       return true;
     } catch (e) {
       snackBar(e.toString(), context, 2, FlashPosition.top);

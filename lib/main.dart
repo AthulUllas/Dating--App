@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:matrimony/features/userdetails/view/pages/gender_page.dart';
+import 'package:matrimony/features/splashscreen/splashscreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Matrimony App',
       debugShowCheckedModeBanner: false,
-      home: GenderPage(),
+      home: Splashscreen(),
     );
   }
 }
