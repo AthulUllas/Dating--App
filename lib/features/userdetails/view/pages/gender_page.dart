@@ -1,10 +1,10 @@
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:matrimony/features/auth/view/widgets/continue_button.dart';
+import 'package:matrimony/features/userdetails/services/getstorage_service.dart';
 import 'package:matrimony/features/userdetails/view/widgets/gender_button.dart';
 import 'package:matrimony/utils/colors.dart';
 import 'package:matrimony/utils/fontstyle.dart';
@@ -21,7 +21,6 @@ class GenderPage extends HookWidget {
     final isMaleTapped = useState(false);
     final isFemaleTapped = useState(false);
     final isOtherTapped = useState(false);
-    final genderStorage = GetStorage('gender');
     return Scaffold(
       backgroundColor: colors.scaffoldBackgroundColor,
       body: Center(
@@ -38,7 +37,7 @@ class GenderPage extends HookWidget {
             ),
             GestureDetector(
               onTap: () {
-                isMaleTapped.value = !isMaleTapped.value;
+                isMaleTapped.value = true;
                 isFemaleTapped.value
                     ? isFemaleTapped.value = false
                     : isFemaleTapped.value = isFemaleTapped.value;
@@ -62,7 +61,7 @@ class GenderPage extends HookWidget {
             ),
             GestureDetector(
               onTap: () {
-                isFemaleTapped.value = !isFemaleTapped.value;
+                isFemaleTapped.value = true;
                 isMaleTapped.value
                     ? isMaleTapped.value = false
                     : isMaleTapped.value = isMaleTapped.value;
@@ -86,7 +85,7 @@ class GenderPage extends HookWidget {
             ),
             GestureDetector(
               onTap: () {
-                isOtherTapped.value = !isOtherTapped.value;
+                isOtherTapped.value = true;
                 isMaleTapped.value
                     ? isMaleTapped.value = false
                     : isMaleTapped.value = isMaleTapped.value;
@@ -114,7 +113,7 @@ class GenderPage extends HookWidget {
                 if (!isMaleTapped.value &&
                     !isFemaleTapped.value &&
                     !isOtherTapped.value) {
-                  snackBar("Are you gay", context, 2, FlashPosition.top);
+                  snackBar("Are you gay/les", context, 2, FlashPosition.top);
                 } else {
                   String? gender;
                   if (isMaleTapped.value) {
@@ -126,8 +125,7 @@ class GenderPage extends HookWidget {
                   if (isOtherTapped.value) {
                     gender = "Other";
                   }
-                  genderStorage.write('gender', gender);
-                  print(genderStorage.read('gender'));
+                  saveGender(gender);
                 }
               },
               child: ContinueButton(),

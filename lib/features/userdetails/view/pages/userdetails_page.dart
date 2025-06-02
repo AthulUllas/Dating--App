@@ -8,6 +8,7 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:matrimony/features/auth/view/widgets/continue_button.dart';
 import 'package:matrimony/features/auth/view/widgets/logo_head.dart';
 import 'package:matrimony/features/auth/view/widgets/textfield_widget.dart';
+import 'package:matrimony/features/userdetails/services/getstorage_service.dart';
 import 'package:matrimony/features/userdetails/view/pages/gender_page.dart';
 import 'package:matrimony/utils/colors.dart';
 import 'package:matrimony/utils/snackbar.dart';
@@ -22,8 +23,6 @@ class UserDetailsPage extends HookWidget {
     final colors = Colours();
     final size = MediaQuery.of(context).size;
     final isChecked = useState(false);
-    final nameStorage = GetStorage('name');
-    final phoneStorage = GetStorage('phone');
     return Scaffold(
       backgroundColor: colors.scaffoldBackgroundColor,
       body: Center(
@@ -73,8 +72,10 @@ class UserDetailsPage extends HookWidget {
                 if (isChecked.value) {
                   if (nameController.text.isNotEmpty &&
                       phoneController.text.isNotEmpty) {
-                    nameStorage.write('name', nameController.text.trim());
-                    phoneStorage.write('phone', phoneController.text.trim());
+                    saveDetails(
+                      nameController.text.trim(),
+                      phoneController.text.trim(),
+                    );
                     Navigator.of(context).push(
                       PageRouteBuilder(
                         pageBuilder: (context, animation, secondaryAnimation) =>
