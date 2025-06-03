@@ -4,7 +4,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:matrimony/utils/snackbar.dart';
 
-Future<Position?> getCurrentLocation(BuildContext context) async {
+Future<String?> getCurrentLocation(BuildContext context) async {
   bool serviceEnabled;
   LocationPermission permission;
   serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -19,17 +19,6 @@ Future<Position?> getCurrentLocation(BuildContext context) async {
     }
   }
 
-  // permission = await Geolocator.checkPermission();
-  // if (permission == LocationPermission.denied) {
-  //   permission = await Geolocator.requestPermission();
-  //   if (permission == LocationPermission.denied) {
-  //     return Future.error("Location permission disabled");
-  //   }
-  // }
-
-  // if (permission == LocationPermission.deniedForever) {
-  //   return Future.error('Location permission is denied forever');
-  // }
   try {
     final currentPosition = await Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.high,
@@ -38,8 +27,8 @@ Future<Position?> getCurrentLocation(BuildContext context) async {
     debugPrint(
       "Lat --- ${currentPosition.latitude} , Long --- ${currentPosition.longitude}",
     );
-    getAddressFromLatlng(currentPosition);
-    return currentPosition;
+    final location = await getAddressFromLatlng(currentPosition);
+    return location;
   } catch (e) {
     debugPrint(e.toString());
     return null;

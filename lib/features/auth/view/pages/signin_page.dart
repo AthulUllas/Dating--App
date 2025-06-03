@@ -179,6 +179,7 @@ class SigninPage extends HookWidget {
                     user.phoneNumber,
                     null,
                     user.photoURL,
+                    "No location",
                   );
                 } else {
                   snackBar("Error signing in", context, 2, FlashPosition.top);

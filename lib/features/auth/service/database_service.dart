@@ -12,6 +12,7 @@ class DatabaseServices {
     String? phone,
     String? gender,
     String? photoUrl,
+    String? location,
   ) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
@@ -23,6 +24,7 @@ class DatabaseServices {
           'phone': phone,
           'gender': gender,
           'photoUrl': photoUrl,
+          'location': location,
           'createdAt': DateTime.now(),
         });
       } catch (e) {
@@ -37,6 +39,7 @@ class DatabaseServices {
     String name,
     String phone,
     BuildContext context,
+    String location,
   ) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
@@ -45,6 +48,7 @@ class DatabaseServices {
         FirebaseFirestore.instance.collection('users').doc(uid).update({
           'name': name,
           'phone': phone,
+          'location': location,
         });
       } catch (e) {
         debugPrint(e.toString());
