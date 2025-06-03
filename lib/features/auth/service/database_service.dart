@@ -6,11 +6,12 @@ import 'package:matrimony/utils/snackbar.dart';
 
 class DatabaseServices {
   Future<void> registerUserInDatabase(
-    String email,
+    String? email,
     BuildContext context,
     String? name,
     String? phone,
     String? gender,
+    String? photoUrl,
   ) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
@@ -21,6 +22,7 @@ class DatabaseServices {
           'email': email,
           'phone': phone,
           'gender': gender,
+          'photoUrl': photoUrl,
           'createdAt': DateTime.now(),
         });
       } catch (e) {
@@ -31,7 +33,7 @@ class DatabaseServices {
     }
   }
 
-  Future<void> updateNameAndPhoneInDatabase(
+  Future<void> updateUserDetailsInDatabase(
     String name,
     String phone,
     BuildContext context,

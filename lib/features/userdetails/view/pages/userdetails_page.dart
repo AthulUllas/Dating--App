@@ -1,9 +1,12 @@
+import 'dart:io';
 import 'package:animations/animations.dart';
 import 'package:flash/flash.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:matrimony/features/auth/service/database_service.dart';
 import 'package:matrimony/features/auth/view/widgets/continue_button.dart';
 import 'package:matrimony/features/auth/view/widgets/logo_head.dart';
 import 'package:matrimony/features/auth/view/widgets/textfield_widget.dart';
@@ -22,34 +25,65 @@ class UserDetailsPage extends HookWidget {
     final colors = Colours();
     final size = MediaQuery.of(context).size;
     final isChecked = useState(false);
+    final databaseStorage = DatabaseServices();
+    final imageFile = useState<File?>(null);
+    Future<void> pickImage() async {
+      final imagepicker = ImagePicker();
+      final pickedImage = await imagepicker.pickImage(
+        source: ImageSource.gallery,
+      );
+      if (pickedImage != null) {
+        final file = File(pickedImage.path);
+        imageFile.value = file;
+        saveDp(file.path);
+      }
+    }
+
     return Scaffold(
       backgroundColor: colors.scaffoldBackgroundColor,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            SizedBox(height: size.height * 0.2),
+            SizedBox(height: size.height * 0.15),
             LogoHead(),
+            GestureDetector(
+              onTap: () {
+                pickImage();
+              },
+              child: CircleAvatar(
+                radius: 50,
+                backgroundImage: imageFile.value != null
+                    ? FileImage(imageFile.value!)
+                    : AssetImage("assets/images/user_logo.jpg"),
+              ),
+            ),
+            SizedBox(height: 20),
             TextfieldWidget(
               trailing: Icon(Clarity.user_line),
               controller: nameController,
               hint: "Name",
               type: TextInputType.name,
             ),
+            SizedBox(height: 3),
             TextfieldWidget(
               trailing: Icon(Clarity.mobile_line),
               controller: phoneController,
               hint: "Phone",
               type: TextInputType.phone,
             ),
+            SizedBox(height: 3),
             Row(
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 32.0),
-                  child: Text("Note : Your details are only visible to you"),
+                  child: Text(
+                    "Note : Your photo and details are only visible to you",
+                  ),
                 ),
               ],
             ),
+            SizedBox(height: 1),
             Row(
               children: [
                 Padding(
@@ -91,6 +125,11 @@ class UserDetailsPage extends HookWidget {
                             },
                       ),
                     );
+                    databaseStorage.updateUserDetailsInDatabase(
+                      nameController.text.trim(),
+                      phoneController.text.trim(),
+                      context,
+                    );
                   } else {
                     snackBar("Textfield empty", context, 1, FlashPosition.top);
                   }
@@ -105,7 +144,7 @@ class UserDetailsPage extends HookWidget {
               },
               child: ContinueButton(),
             ),
-            SizedBox(height: size.height * 0.3),
+            SizedBox(height: size.height * 0.2),
           ],
         ),
       ),

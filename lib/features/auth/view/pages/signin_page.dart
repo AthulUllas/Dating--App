@@ -13,6 +13,7 @@ import 'package:matrimony/features/auth/view/widgets/continue_button.dart';
 import 'package:matrimony/features/auth/view/widgets/google_signin_button.dart';
 import 'package:matrimony/features/auth/view/widgets/logo_head.dart';
 import 'package:matrimony/features/auth/view/widgets/textfield_widget.dart';
+import 'package:matrimony/features/homepage/views/pages/homepage.dart';
 import 'package:matrimony/features/userdetails/view/pages/userdetails_page.dart';
 import 'package:matrimony/utils/colors.dart';
 import 'package:matrimony/utils/dimensions.dart';
@@ -113,7 +114,7 @@ class SigninPage extends HookWidget {
                         PageRouteBuilder(
                           pageBuilder:
                               (context, animation, secondaryAnimation) =>
-                                  UserDetailsPage(),
+                                  Homepage(),
                           transitionsBuilder:
                               (context, animation, secondaryAnimation, child) {
                                 return SharedAxisTransition(
@@ -172,11 +173,12 @@ class SigninPage extends HookWidget {
                   );
                   final user = FirebaseAuth.instance.currentUser;
                   databaseServices.registerUserInDatabase(
-                    user!.email.toString(),
+                    user!.email,
                     context,
                     user.displayName,
                     user.phoneNumber,
                     null,
+                    user.photoURL,
                   );
                 } else {
                   snackBar("Error signing in", context, 2, FlashPosition.top);

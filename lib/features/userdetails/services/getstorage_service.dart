@@ -4,6 +4,7 @@ import 'package:get_storage/get_storage.dart';
 final nameStorage = GetStorage('name');
 final phoneStorage = GetStorage('phone');
 final genderStorage = GetStorage('gender');
+final dpStorage = GetStorage('dp');
 
 void saveDetails(String name, String phone) {
   nameStorage.write('name', name);
@@ -15,4 +16,9 @@ void saveDetails(String name, String phone) {
 void saveGender(String? gender) {
   genderStorage.write('gender', gender);
   debugPrint(genderStorage.read('gender'));
+}
+
+void saveDp(String dp) {
+  dpStorage.write('dp', dp);
+  debugPrint(dpStorage.read('dp'));
 }

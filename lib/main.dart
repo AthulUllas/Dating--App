@@ -1,13 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:matrimony/features/splashscreen/splashscreen.dart';
+import 'package:matrimony/features/userdetails/view/pages/userdetails_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   GetStorage.init('name');
   GetStorage.init('phone');
   GetStorage.init('gender');
+  GetStorage.init('dp');
   await Firebase.initializeApp(
     options: FirebaseOptions(
       apiKey: "AIzaSyDELHJE4ueIRBlE9u3qdpnJUNUvmoAEWEc",
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Matrimony App',
       debugShowCheckedModeBanner: false,
-      home: Splashscreen(),
+      home: UserDetailsPage(),
     );
   }
 }

@@ -1,4 +1,6 @@
 import 'package:animations/animations.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -138,6 +140,7 @@ class Signuppage extends HookWidget {
                         "No name",
                         "No number",
                         "No gender",
+                        "No photo",
                       );
                     }
                   } else {
