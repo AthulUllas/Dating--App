@@ -11,6 +11,7 @@ import 'package:matrimony/features/auth/view/widgets/continue_button.dart';
 import 'package:matrimony/features/auth/view/widgets/logo_head.dart';
 import 'package:matrimony/features/auth/view/widgets/textfield_widget.dart';
 import 'package:matrimony/features/userdetails/services/getstorage_service.dart';
+import 'package:matrimony/features/userdetails/services/location_service.dart';
 import 'package:matrimony/features/userdetails/view/pages/gender_page.dart';
 import 'package:matrimony/utils/colors.dart';
 import 'package:matrimony/utils/snackbar.dart';
@@ -38,6 +39,11 @@ class UserDetailsPage extends HookWidget {
         saveDp(file.path);
       }
     }
+
+    useEffect(() {
+      getCurrentLocation(context);
+      return null;
+    });
 
     return Scaffold(
       backgroundColor: colors.scaffoldBackgroundColor,
