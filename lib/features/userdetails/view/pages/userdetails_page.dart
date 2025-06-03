@@ -4,6 +4,7 @@ import 'package:flash/flash.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:matrimony/features/auth/service/database_service.dart';
@@ -41,7 +42,7 @@ class UserDetailsPage extends HookWidget {
     }
 
     useEffect(() {
-      getCurrentLocation(context);
+      final currentLocation = getCurrentLocation(context);
       return null;
     });
 

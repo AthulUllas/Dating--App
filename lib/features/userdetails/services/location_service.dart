@@ -1,5 +1,6 @@
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:matrimony/utils/snackbar.dart';
 
@@ -37,9 +38,23 @@ Future<Position?> getCurrentLocation(BuildContext context) async {
     debugPrint(
       "Lat --- ${currentPosition.latitude} , Long --- ${currentPosition.longitude}",
     );
+    getAddressFromLatlng(currentPosition);
     return currentPosition;
   } catch (e) {
     debugPrint(e.toString());
     return null;
   }
+}
+
+Future<String> getAddressFromLatlng(Position position) async {
+  List<Placemark> placemarks = await placemarkFromCoordinates(
+    position.latitude,
+    position.longitude,
+  );
+
+  final placemark = placemarks.first;
+  final address =
+      "PinCode = ${placemark.postalCode}, Place = ${placemark.locality}, PlusCode = ${placemark.name}";
+  debugPrint(address);
+  return address;
 }
