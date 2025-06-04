@@ -1,9 +1,11 @@
+import 'package:animations/animations.dart';
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:matrimony/features/auth/service/database_service.dart';
+import 'package:matrimony/features/auth/view/pages/signin_page.dart';
 import 'package:matrimony/features/auth/view/widgets/continue_button.dart';
 import 'package:matrimony/features/userdetails/services/getstorage_service.dart';
 import 'package:matrimony/features/userdetails/view/widgets/gender_button.dart';
@@ -115,7 +117,12 @@ class GenderPage extends HookWidget {
                 if (!isMaleTapped.value &&
                     !isFemaleTapped.value &&
                     !isOtherTapped.value) {
-                  snackBar("Are you gay/les", context, 2, FlashPosition.top);
+                  snackBar(
+                    "Why are you gay/les",
+                    context,
+                    2,
+                    FlashPosition.top,
+                  );
                 } else {
                   String? gender;
                   if (isMaleTapped.value) {
@@ -131,6 +138,23 @@ class GenderPage extends HookWidget {
                   databaseServices.updateGenderInDatabase(
                     gender.toString(),
                     context,
+                  );
+                  Navigator.of(context).pushAndRemoveUntil(
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          SigninPage(),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                            return SharedAxisTransition(
+                              animation: animation,
+                              secondaryAnimation: secondaryAnimation,
+                              transitionType:
+                                  SharedAxisTransitionType.horizontal,
+                              child: child,
+                            );
+                          },
+                    ),
+                    (route) => false,
                   );
                 }
               },

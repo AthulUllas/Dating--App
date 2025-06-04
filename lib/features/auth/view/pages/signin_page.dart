@@ -110,7 +110,7 @@ class SigninPage extends HookWidget {
                       context,
                     );
                     if (await isSignedIn) {
-                      Navigator.of(context).push(
+                      Navigator.of(context).pushAndRemoveUntil(
                         PageRouteBuilder(
                           pageBuilder:
                               (context, animation, secondaryAnimation) =>
@@ -126,6 +126,7 @@ class SigninPage extends HookWidget {
                                 );
                               },
                         ),
+                        (route) => false,
                       );
                       snackBar("Signed In", context, 1, FlashPosition.bottom);
                     }
@@ -155,7 +156,7 @@ class SigninPage extends HookWidget {
                   context,
                 );
                 if (isGoogleSignedIn) {
-                  Navigator.of(context).push(
+                  Navigator.of(context).pushReplacement(
                     PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) =>
                           UserDetailsPage(),

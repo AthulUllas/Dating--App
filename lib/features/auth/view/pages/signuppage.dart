@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -6,7 +7,6 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:matrimony/features/auth/helper/is_email_helper.dart';
 import 'package:matrimony/features/auth/service/database_service.dart';
 import 'package:matrimony/features/auth/service/firebase_services.dart';
-import 'package:matrimony/features/auth/view/pages/signin_page.dart';
 import 'package:matrimony/features/auth/view/widgets/continue_button.dart';
 import 'package:matrimony/features/auth/view/widgets/google_signin_button.dart';
 import 'package:matrimony/features/auth/view/widgets/logo_head.dart';
@@ -119,7 +119,7 @@ class Signuppage extends HookWidget {
                         PageRouteBuilder(
                           pageBuilder:
                               (context, animation, secondaryAnimation) =>
-                                  SigninPage(),
+                                  UserDetailsPage(),
                           transitionsBuilder:
                               (context, animation, secondaryAnimation, child) {
                                 return SharedAxisTransition(
@@ -139,7 +139,7 @@ class Signuppage extends HookWidget {
                         null,
                         null,
                         null,
-                        null,
+                        "No Location",
                       );
                     }
                   } else {
@@ -168,7 +168,7 @@ class Signuppage extends HookWidget {
               onTap: () async {
                 final isSignedIn = await authServices.signInWithGoogle(context);
                 if (isSignedIn) {
-                  Navigator.of(context).push(
+                  Navigator.of(context).pushReplacement(
                     PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) =>
                           UserDetailsPage(),
@@ -183,6 +183,16 @@ class Signuppage extends HookWidget {
                             );
                           },
                     ),
+                  );
+                  final user = FirebaseAuth.instance.currentUser;
+                  databaseServices.registerUserInDatabase(
+                    user!.email,
+                    context,
+                    user.displayName,
+                    user.phoneNumber ?? "No number",
+                    null,
+                    user.photoURL,
+                    "Location null",
                   );
                 } else {
                   snackBar("Login failed", context, 1, FlashPosition.top);
