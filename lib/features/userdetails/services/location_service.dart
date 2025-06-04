@@ -4,7 +4,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:matrimony/utils/snackbar.dart';
 
-Future<String?> getCurrentLocation(BuildContext context) async {
+Future<String> getCurrentLocation(BuildContext context) async {
   bool serviceEnabled;
   LocationPermission permission;
   serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -21,7 +21,7 @@ Future<String?> getCurrentLocation(BuildContext context) async {
 
   try {
     final currentPosition = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
+      locationSettings: LocationSettings(accuracy: LocationAccuracy.best),
     );
 
     debugPrint(
@@ -31,19 +31,26 @@ Future<String?> getCurrentLocation(BuildContext context) async {
     return location;
   } catch (e) {
     debugPrint(e.toString());
-    return null;
+    return e.toString();
   }
 }
 
 Future<String> getAddressFromLatlng(Position position) async {
-  List<Placemark> placemarks = await placemarkFromCoordinates(
-    position.latitude,
-    position.longitude,
-  );
+  try {
+    List<Placemark> placemarks = await placemarkFromCoordinates(
+      position.latitude,
+      position.longitude,
+    );
 
-  final placemark = placemarks.first;
-  final address =
-      "PinCode = ${placemark.postalCode}, Place = ${placemark.locality}, PlusCode = ${placemark.name}";
-  debugPrint(address);
-  return address;
+    final placemark = placemarks.first;
+    final address =
+        "PinCode = ${placemark.postalCode}, Place = ${placemark.locality}, PlusCode = ${placemark.name}";
+    debugPrint(address);
+    return address;
+  } catch (e) {
+    debugPrint(
+      "<---------------------------------------------${e.toString()}------------------------------------------------------->",
+    );
+    return e.toString();
+  }
 }

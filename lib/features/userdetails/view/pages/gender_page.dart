@@ -5,8 +5,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:matrimony/features/auth/service/database_service.dart';
-import 'package:matrimony/features/auth/view/pages/signin_page.dart';
 import 'package:matrimony/features/auth/view/widgets/continue_button.dart';
+import 'package:matrimony/features/homepage/views/pages/homepage.dart';
 import 'package:matrimony/features/userdetails/services/getstorage_service.dart';
 import 'package:matrimony/features/userdetails/view/widgets/gender_button.dart';
 import 'package:matrimony/utils/colors.dart';
@@ -142,7 +142,7 @@ class GenderPage extends HookWidget {
                   Navigator.of(context).pushAndRemoveUntil(
                     PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) =>
-                          SigninPage(),
+                          Homepage(),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {
                             return SharedAxisTransition(

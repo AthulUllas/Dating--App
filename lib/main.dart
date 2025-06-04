@@ -26,7 +26,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Matrimony App',
+      themeMode: ThemeMode.system,
+      title: 'Favmate',
       debugShowCheckedModeBanner: false,
       home: Splashscreen(),
     );

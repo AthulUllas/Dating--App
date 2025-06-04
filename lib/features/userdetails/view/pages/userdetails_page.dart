@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:animations/animations.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash/flash.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,12 @@ class UserDetailsPage extends HookWidget {
   Widget build(BuildContext context) {
     final nameController = useTextEditingController();
     final phoneController = useTextEditingController();
+    final user = FirebaseAuth.instance.currentUser;
+    useEffect(() {
+      nameController.text = user?.displayName ?? "";
+      phoneController.text = "+91 ";
+      return null;
+    });
     final colors = Colours();
     final size = MediaQuery.of(context).size;
     final isChecked = useState(false);
@@ -75,7 +82,7 @@ class UserDetailsPage extends HookWidget {
             TextfieldWidget(
               trailing: Icon(Clarity.mobile_line),
               controller: phoneController,
-              hint: "Phone",
+              hint: "CountryCode & PhoneNumber",
               type: TextInputType.phone,
             ),
             SizedBox(height: 3),
@@ -108,47 +115,65 @@ class UserDetailsPage extends HookWidget {
             ),
             GestureDetector(
               onTap: () async {
-                if (isChecked.value) {
-                  if (nameController.text.isNotEmpty &&
-                      phoneController.text.isNotEmpty) {
-                    saveDetails(
-                      nameController.text.trim(),
-                      phoneController.text.trim(),
-                    );
-                    Navigator.of(context).push(
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation, secondaryAnimation) =>
-                            GenderPage(),
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) {
-                              return SharedAxisTransition(
-                                animation: animation,
-                                secondaryAnimation: secondaryAnimation,
-                                transitionType:
-                                    SharedAxisTransitionType.horizontal,
-                                child: child,
-                              );
-                            },
-                      ),
-                    );
-                    final location = await getLocation();
-                    databaseStorage.updateUserDetailsInDatabase(
-                      nameController.text.trim(),
-                      phoneController.text.trim(),
-                      context,
-                      location.toString(),
-                    );
-                    debugPrint(
-                      "<_--------------------------Added---------------------------_>",
-                    );
+                if (phoneController.text.length >= 10) {
+                  if (isChecked.value) {
+                    if (nameController.text.isNotEmpty &&
+                        phoneController.text.isNotEmpty) {
+                      saveDetails(
+                        nameController.text.trim(),
+                        phoneController.text.trim(),
+                      );
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                                  GenderPage(),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                                return SharedAxisTransition(
+                                  animation: animation,
+                                  secondaryAnimation: secondaryAnimation,
+                                  transitionType:
+                                      SharedAxisTransitionType.horizontal,
+                                  child: child,
+                                );
+                              },
+                        ),
+                      );
+                      final location = await getLocation();
+                      databaseStorage.updateUserDetailsInDatabase(
+                        nameController.text.trim(),
+                        phoneController.text.trim(),
+                        context,
+                        location!,
+                      );
+                      debugPrint(
+                        "<_--------------------------Added---------------------------_>",
+                      );
+                      debugPrint(
+                        "<---------------------------------------------$location----------------------------------------->",
+                      );
+                    } else {
+                      snackBar(
+                        "Textfield empty",
+                        context,
+                        1,
+                        FlashPosition.top,
+                      );
+                    }
                   } else {
-                    snackBar("Textfield empty", context, 1, FlashPosition.top);
+                    snackBar(
+                      "Please agree to the terms",
+                      context,
+                      2,
+                      FlashPosition.top,
+                    );
                   }
                 } else {
                   snackBar(
-                    "Please agree to the terms",
+                    "Enter correct phone number",
                     context,
-                    2,
+                    1,
                     FlashPosition.top,
                   );
                 }
