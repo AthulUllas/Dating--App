@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:matrimony/features/splashscreen/view/splashscreen.dart';
+import 'package:matrimony/features/userdetails/view/pages/userdetails_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       title: 'Favmate',
       debugShowCheckedModeBanner: false,
-      home: Splashscreen(),
+      home: UserDetailsPage(),
     );
   }
 }

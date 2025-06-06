@@ -63,11 +63,19 @@ class UserDetailsPage extends HookWidget {
               onTap: () {
                 pickImage();
               },
-              child: CircleAvatar(
-                radius: 50,
-                backgroundImage: imageFile.value != null
-                    ? FileImage(imageFile.value!)
-                    : AssetImage("assets/images/user_logo.jpg"),
+              child: Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(40),
+                  border: Border.all(width: 0.5, color: colors.secondaryColor),
+                  image: DecorationImage(
+                    image: imageFile.value != null
+                        ? FileImage(imageFile.value!)
+                        : AssetImage("assets/images/user_logo.png"),
+                    fit: BoxFit.fill,
+                  ),
+                ),
               ),
             ),
             SizedBox(height: 20),
