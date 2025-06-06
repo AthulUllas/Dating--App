@@ -68,7 +68,7 @@ class UserDetailsPage extends HookWidget {
                 height: 100,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(40),
-                  border: Border.all(width: 0.5, color: colors.secondaryColor),
+                  border: Border.all(width: 0.2, color: colors.secondaryColor),
                   image: DecorationImage(
                     image: imageFile.value != null
                         ? FileImage(imageFile.value!)
@@ -158,7 +158,7 @@ class UserDetailsPage extends HookWidget {
                         "<_--------------------------Added---------------------------_>",
                       );
                       debugPrint(
-                        "<---------------------------------------------$location----------------------------------------->",
+                        "<_--------------------------------------------$location----------------------------------------_>",
                       );
                     } else {
                       snackBar(

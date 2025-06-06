@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,8 @@ class DatabaseServices {
     String? photoUrl,
     String? location,
   ) async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       try {
@@ -26,6 +29,7 @@ class DatabaseServices {
           'photoUrl': photoUrl,
           'location': location,
           'createdAt': DateTime.now(),
+          'devicemodel': androidInfo.model,
         });
       } catch (e) {
         debugPrint(e.toString());
@@ -77,13 +81,16 @@ class DatabaseServices {
     }
   }
 
-  Future<void> updateLocationInDatabase(String location) async {
+  Future<void> updateLocationAndDeviceInfoInDatabase(String location) async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       try {
         final uid = user.uid;
         FirebaseFirestore.instance.collection('users').doc(uid).update({
           'location': location,
+          'devicemodel': androidInfo.model,
         });
       } catch (e) {
         debugPrint(e.toString());

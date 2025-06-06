@@ -12,7 +12,7 @@ Future<void> checkUserExists(BuildContext context) async {
   final databaseServices = DatabaseServices();
   if (user != null) {
     final location = await getCurrentLocation(context);
-    databaseServices.updateLocationInDatabase(location);
+    databaseServices.updateLocationAndDeviceInfoInDatabase(location);
     final doc = await FirebaseFirestore.instance
         .collection('users')
         .doc(user.uid)
