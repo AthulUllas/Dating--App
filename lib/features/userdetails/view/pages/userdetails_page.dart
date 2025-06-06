@@ -27,7 +27,7 @@ class UserDetailsPage extends HookWidget {
     final user = FirebaseAuth.instance.currentUser;
     useEffect(() {
       nameController.text = user?.displayName ?? "";
-      phoneController.text = "+91 ";
+      // phoneController.text = "+91 ";
       return null;
     });
     final colors = Colours();
