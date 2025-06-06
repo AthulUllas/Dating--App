@@ -2,6 +2,7 @@ import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:matrimony/features/userdetails/services/getstorage_service.dart';
 import 'package:matrimony/utils/snackbar.dart';
 
 Future<String> getCurrentLocation(BuildContext context) async {
@@ -46,6 +47,8 @@ Future<String> getAddressFromLatlng(Position position) async {
     final address =
         "PinCode = ${placemark.postalCode}, Place = ${placemark.locality}, PlusCode = ${placemark.name}";
     debugPrint(address);
+    saveLocation(placemark.locality ?? "No location");
+    saveLocationPlusCode(placemark.name ?? "00000");
     return address;
   } catch (e) {
     debugPrint(

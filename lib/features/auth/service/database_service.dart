@@ -76,4 +76,18 @@ class DatabaseServices {
       snackBar("Please login first", context, 1, FlashPosition.top);
     }
   }
+
+  Future<void> updateLocationInDatabase(String location) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      try {
+        final uid = user.uid;
+        FirebaseFirestore.instance.collection('users').doc(uid).update({
+          'location': location,
+        });
+      } catch (e) {
+        debugPrint(e.toString());
+      }
+    }
+  }
 }

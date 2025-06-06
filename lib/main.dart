@@ -9,6 +9,8 @@ void main() async {
   GetStorage.init('phone');
   GetStorage.init('gender');
   GetStorage.init('dp');
+  GetStorage.init('location');
+  GetStorage.init('locationpluscode');
   await Firebase.initializeApp(
     options: FirebaseOptions(
       apiKey: "AIzaSyDELHJE4ueIRBlE9u3qdpnJUNUvmoAEWEc",

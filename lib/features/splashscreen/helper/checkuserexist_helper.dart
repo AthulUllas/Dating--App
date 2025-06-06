@@ -1,13 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:matrimony/features/auth/service/database_service.dart';
 import 'package:matrimony/features/auth/view/pages/signin_page.dart';
 import 'package:matrimony/features/homepage/views/pages/homepage.dart';
+import 'package:matrimony/features/userdetails/services/location_service.dart';
 
 Future<void> checkUserExists(BuildContext context) async {
   await Future.delayed(Duration(seconds: 2));
   final user = FirebaseAuth.instance.currentUser;
+  final databaseServices = DatabaseServices();
   if (user != null) {
+    final location = await getCurrentLocation(context);
+    databaseServices.updateLocationInDatabase(location);
     final doc = await FirebaseFirestore.instance
         .collection('users')
         .doc(user.uid)
