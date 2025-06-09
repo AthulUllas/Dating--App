@@ -16,7 +16,9 @@ class DatabaseFieldServices {
       }).toList();
       return nameAndPhone;
     } catch (e) {
-      debugPrint("Error  fetching male users: --------------$e--------------");
+      debugPrint(
+        "Error  fetching $gender users: --------------$e--------------",
+      );
       return [];
     }
   }

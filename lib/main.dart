@@ -6,7 +6,6 @@ import 'package:matrimony/features/splashscreen/view/splashscreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await FirebaseFirestore.instance.clearPersistence();
   GetStorage.init('name');
   GetStorage.init('phone');
   GetStorage.init('gender');
@@ -21,6 +20,7 @@ void main() async {
       projectId: "matrimony--app",
     ),
   );
+  await FirebaseFirestore.instance.clearPersistence();
   runApp(const MyApp());
 }
 
