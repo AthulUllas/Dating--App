@@ -73,7 +73,7 @@ class UserDetailsPage extends HookWidget {
                     image: imageFile.value != null
                         ? FileImage(imageFile.value!)
                         : AssetImage("assets/images/user_logo.png"),
-                    fit: BoxFit.fill,
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),

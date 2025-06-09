@@ -9,7 +9,7 @@ class DatabaseFieldServices {
       QuerySnapshot snapshot = await FirebaseFirestore.instance
           .collection('users')
           .where('gender', isEqualTo: gender)
-          .get();
+          .get(GetOptions(source: Source.server));
       final nameAndPhone = snapshot.docs.map((doc) {
         final data = doc.data() as Map<String, dynamic>;
         return {'uid': doc.id, 'name': data['name'], 'phone': data['phone']};
