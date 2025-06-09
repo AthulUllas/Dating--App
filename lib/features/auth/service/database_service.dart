@@ -84,13 +84,14 @@ class DatabaseServices {
   Future<void> updateLocationAndDeviceInfoInDatabase(String location) async {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    final deviceModel = androidInfo.model;
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       try {
         final uid = user.uid;
         FirebaseFirestore.instance.collection('users').doc(uid).update({
           'location': location,
-          'devicemodel': androidInfo.model,
+          'devicemodel': deviceModel,
         });
       } catch (e) {
         debugPrint(e.toString());
