@@ -17,6 +17,7 @@ class DatabaseServices {
   ) async {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    final model = androidInfo.model;
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       try {
@@ -29,7 +30,7 @@ class DatabaseServices {
           'photoUrl': photoUrl,
           'location': location,
           'createdAt': DateTime.now(),
-          'devicemodel': androidInfo.model,
+          'devicemodel': model,
         });
       } catch (e) {
         debugPrint(e.toString());
