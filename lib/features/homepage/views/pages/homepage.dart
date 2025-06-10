@@ -8,9 +8,11 @@ import 'package:matrimony/features/auth/view/pages/signin_page.dart';
 import 'package:matrimony/features/homepage/helper/text_hide_helper.dart';
 import 'package:matrimony/features/homepage/service/database_service.dart';
 import 'package:matrimony/features/homepage/views/widgets/gender_select_button.dart';
+import 'package:matrimony/features/homepage/views/widgets/options_list.dart';
 import 'package:matrimony/utils/colors.dart';
 import 'package:matrimony/utils/dimensions.dart';
 import 'package:matrimony/utils/fontstyle.dart';
+import 'package:matrimony/utils/options_popup.dart';
 
 class Homepage extends HookWidget {
   const Homepage({super.key});
@@ -162,9 +164,19 @@ class Homepage extends HookWidget {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
-                  return Center(child: Text("Error fetching users"));
+                  return Center(
+                    child: Text(
+                      "Error fetching users",
+                      style: styles.homepageMessageStyle,
+                    ),
+                  );
                 } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Center(child: Text("No users found"));
+                  return Center(
+                    child: Text(
+                      "No users were found !",
+                      style: styles.homepageMessageStyle,
+                    ),
+                  );
                 }
                 final users = snapshot.data;
                 return ListView.builder(
@@ -207,7 +219,9 @@ class Homepage extends HookWidget {
                             icon: Icon(Clarity.phone_handset_solid),
                           ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              // showOptions(context, OptionsList());
+                            },
                             icon: Icon(Clarity.menu_line),
                           ),
                           SizedBox(width: size.width * 0.008),

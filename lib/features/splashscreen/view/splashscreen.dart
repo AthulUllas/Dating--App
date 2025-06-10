@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:matrimony/features/splashscreen/helper/checkuserexist_helper.dart';
 import 'package:matrimony/utils/colors.dart';
 
-class Splashscreen extends HookWidget {
+class Splashscreen extends StatefulWidget {
   const Splashscreen({super.key});
+
+  @override
+  State<Splashscreen> createState() => _SplashscreenState();
+}
+
+class _SplashscreenState extends State<Splashscreen> {
+  @override
+  void initState() {
+    super.initState();
+    checkUserExists(context);
+  }
 
   @override
   Widget build(BuildContext context) {
     final colors = Colours();
     final size = MediaQuery.of(context).size;
-
-    useEffect(() {
-      checkUserExists(context);
-      return null;
-    });
 
     return Scaffold(
       backgroundColor: colors.splashBackgroudColor,

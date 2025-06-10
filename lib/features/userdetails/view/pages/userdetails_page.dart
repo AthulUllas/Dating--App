@@ -146,7 +146,7 @@ class UserDetailsPage extends HookWidget {
                         nameController.text.trim(),
                         phoneController.text.trim(),
                         context,
-                        location!,
+                        location ?? "No location",
                       );
                       debugPrint(
                         "<_--------------------------Added---------------------------_>",

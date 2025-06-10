@@ -35,4 +35,9 @@ class Fontstyle {
   final genderButtonTextStyle = GoogleFonts.mandali(
     fontWeight: FontWeight.bold,
   );
+
+  final homepageMessageStyle = GoogleFonts.anekDevanagari(
+    fontWeight: FontWeight.w500,
+    fontSize: 20,
+  );
 }
