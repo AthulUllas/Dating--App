@@ -7,6 +7,7 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:matrimony/features/auth/helper/is_email_helper.dart';
 import 'package:matrimony/features/auth/service/database_service.dart';
 import 'package:matrimony/features/auth/service/firebase_services.dart';
+import 'package:matrimony/features/auth/view/pages/signin_page.dart';
 import 'package:matrimony/features/auth/view/widgets/continue_button.dart';
 import 'package:matrimony/features/auth/view/widgets/google_signin_button.dart';
 import 'package:matrimony/features/auth/view/widgets/logo_head.dart';
@@ -119,7 +120,7 @@ class Signuppage extends HookWidget {
                         PageRouteBuilder(
                           pageBuilder:
                               (context, animation, secondaryAnimation) =>
-                                  UserDetailsPage(),
+                                  SigninPage(),
                           transitionsBuilder:
                               (context, animation, secondaryAnimation, child) {
                                 return SharedAxisTransition(

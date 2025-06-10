@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:animations/animations.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash/flash.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,11 +23,6 @@ class UserDetailsPage extends HookWidget {
   Widget build(BuildContext context) {
     final nameController = useTextEditingController();
     final phoneController = useTextEditingController();
-    final user = FirebaseAuth.instance.currentUser;
-    useEffect(() {
-      nameController.text = user?.displayName ?? "";
-      return null;
-    });
     final colors = Colours();
     final size = MediaQuery.of(context).size;
     final isChecked = useState(false);

@@ -26,6 +26,7 @@ class Homepage extends HookWidget {
     final isOtherTapped = useState(false);
     final size = MediaQuery.of(context).size;
     final sides = Dimensions();
+    final currentUserUid = FirebaseAuth.instance.currentUser?.uid;
     return Scaffold(
       backgroundColor: colors.scaffoldBackgroundColor,
       appBar: AppBar(
@@ -155,6 +156,7 @@ class Homepage extends HookWidget {
             child: FutureBuilder(
               future: databaseFieldService.getGenderSpecifiedUsers(
                 gender.value,
+                currentUserUid!,
               ),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -177,7 +179,7 @@ class Homepage extends HookWidget {
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(
                           color: colors.secondaryColor,
-                          width: 1,
+                          width: 1.5,
                         ),
                       ),
                       margin: sides.primaryPadding,
@@ -208,6 +210,7 @@ class Homepage extends HookWidget {
                             onPressed: () {},
                             icon: Icon(Clarity.menu_line),
                           ),
+                          SizedBox(width: size.width * 0.008),
                         ],
                       ),
                     );
