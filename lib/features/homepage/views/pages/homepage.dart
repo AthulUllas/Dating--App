@@ -2,11 +2,14 @@ import 'package:animations/animations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:matrimony/features/auth/view/pages/signin_page.dart';
+import 'package:matrimony/features/homepage/helper/text_hide_helper.dart';
 import 'package:matrimony/features/homepage/service/database_service.dart';
 import 'package:matrimony/features/homepage/views/widgets/gender_select_button.dart';
 import 'package:matrimony/utils/colors.dart';
+import 'package:matrimony/utils/dimensions.dart';
 import 'package:matrimony/utils/fontstyle.dart';
 
 class Homepage extends HookWidget {
@@ -14,7 +17,7 @@ class Homepage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textStyle = Fontstyle();
+    final styles = Fontstyle();
     final colors = Colours();
     final databaseFieldService = DatabaseFieldServices();
     final gender = useState("Male");
@@ -22,6 +25,7 @@ class Homepage extends HookWidget {
     final isFemaleTapped = useState(false);
     final isOtherTapped = useState(false);
     final size = MediaQuery.of(context).size;
+    final sides = Dimensions();
     return Scaffold(
       backgroundColor: colors.scaffoldBackgroundColor,
       appBar: AppBar(
@@ -29,7 +33,7 @@ class Homepage extends HookWidget {
         title: Row(
           children: [
             Image.asset("assets/images/matrimony_logo.png", scale: 16),
-            Text("Matrimony", style: textStyle.appBarTitleStyle),
+            Text("Matrimony", style: styles.appBarTitleStyle),
           ],
         ),
         shape: Border(
@@ -62,7 +66,7 @@ class Homepage extends HookWidget {
       ),
       body: Column(
         children: [
-          SizedBox(height: size.height * 0.01),
+          SizedBox(height: size.height * 0.015),
           GestureDetector(
             onTap: () {
               gender.value = "Male";
@@ -75,10 +79,19 @@ class Homepage extends HookWidget {
                   : isOtherTapped.value = isOtherTapped.value;
             },
             child: GenderSelectButton(
-              gender: "Male Users",
               color: isMaleTapped.value
                   ? colors.homepageGenderButtonColor
                   : colors.scaffoldBackgroundColor,
+              text: Text(
+                "Male Users",
+                style: GoogleFonts.anekDevanagari(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: isMaleTapped.value
+                      ? colors.secondaryTextColor
+                      : colors.primaryTextColor,
+                ),
+              ),
             ),
           ),
           SizedBox(height: size.height * 0.01),
@@ -94,10 +107,19 @@ class Homepage extends HookWidget {
                   : isOtherTapped.value = isOtherTapped.value;
             },
             child: GenderSelectButton(
-              gender: "Female Users",
               color: isFemaleTapped.value
                   ? colors.homepageGenderButtonColor
                   : colors.scaffoldBackgroundColor,
+              text: Text(
+                "Female Users",
+                style: GoogleFonts.anekDevanagari(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: isFemaleTapped.value
+                      ? colors.secondaryTextColor
+                      : colors.primaryTextColor,
+                ),
+              ),
             ),
           ),
           SizedBox(height: size.height * 0.01),
@@ -113,10 +135,19 @@ class Homepage extends HookWidget {
                   : isFemaleTapped.value = isFemaleTapped.value;
             },
             child: GenderSelectButton(
-              gender: "Gay/Les",
               color: isOtherTapped.value
                   ? colors.homepageGenderButtonColor
                   : colors.scaffoldBackgroundColor,
+              text: Text(
+                "Gay/Les",
+                style: GoogleFonts.anekDevanagari(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: isOtherTapped.value
+                      ? colors.secondaryTextColor
+                      : colors.primaryTextColor,
+                ),
+              ),
             ),
           ),
           SizedBox(height: size.height * 0.02),
@@ -138,10 +169,46 @@ class Homepage extends HookWidget {
                   itemCount: users?.length,
                   itemBuilder: (context, index) {
                     final user = users?[index];
-                    return ListTile(
-                      title: Text(
-                        user?['name'],
-                        style: TextStyle(fontSize: 24, color: Colors.red),
+                    final name = user?['name'];
+                    final hidedText = hideText(name);
+                    return Container(
+                      decoration: BoxDecoration(
+                        color: colors.primaryColor,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: colors.secondaryColor,
+                          width: 1,
+                        ),
+                      ),
+                      margin: sides.primaryPadding,
+                      height: size.height * 0.1,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          SizedBox(width: size.width * 0.0001),
+                          CircleAvatar(
+                            radius: 25,
+                            backgroundImage: AssetImage(
+                              "assets/images/funny_dp.jpg",
+                            ),
+                          ),
+                          Text(
+                            hidedText,
+                            style: GoogleFonts.anekDevanagari(
+                              fontSize: 24,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                          SizedBox(width: size.width * 0.18),
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(Clarity.phone_handset_solid),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(Clarity.menu_line),
+                          ),
+                        ],
                       ),
                     );
                   },
