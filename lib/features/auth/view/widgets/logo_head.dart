@@ -15,7 +15,7 @@ class LogoHead extends StatelessWidget {
           "assets/images/matrimony_logo.png",
           width: size.width * 0.2,
         ),
-        Text("Matrimony", style: styles.authHeadingStyle),
+        Text("Favmate", style: styles.authHeadingStyle),
       ],
     );
   }

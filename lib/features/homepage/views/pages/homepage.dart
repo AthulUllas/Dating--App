@@ -8,11 +8,9 @@ import 'package:matrimony/features/auth/view/pages/signin_page.dart';
 import 'package:matrimony/features/homepage/helper/text_hide_helper.dart';
 import 'package:matrimony/features/homepage/service/database_service.dart';
 import 'package:matrimony/features/homepage/views/widgets/gender_select_button.dart';
-import 'package:matrimony/features/homepage/views/widgets/options_list.dart';
 import 'package:matrimony/utils/colors.dart';
 import 'package:matrimony/utils/dimensions.dart';
 import 'package:matrimony/utils/fontstyle.dart';
-import 'package:matrimony/utils/options_popup.dart';
 
 class Homepage extends HookWidget {
   const Homepage({super.key});
@@ -29,6 +27,7 @@ class Homepage extends HookWidget {
     final size = MediaQuery.of(context).size;
     final sides = Dimensions();
     final currentUserUid = FirebaseAuth.instance.currentUser?.uid;
+    final favoritedIndex = useState<int?>(null);
     return Scaffold(
       backgroundColor: colors.scaffoldBackgroundColor,
       appBar: AppBar(
@@ -36,7 +35,7 @@ class Homepage extends HookWidget {
         title: Row(
           children: [
             Image.asset("assets/images/matrimony_logo.png", scale: 16),
-            Text("Matrimony", style: styles.appBarTitleStyle),
+            Text("Favmate", style: styles.appBarTitleStyle),
           ],
         ),
         shape: Border(
@@ -182,50 +181,60 @@ class Homepage extends HookWidget {
                 return ListView.builder(
                   itemCount: users?.length,
                   itemBuilder: (context, index) {
+                    final isFavorited = favoritedIndex.value == index;
                     final user = users?[index];
                     final name = user?['name'];
                     final hidedText = hideText(name);
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: colors.primaryColor,
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                          color: colors.secondaryColor,
-                          width: 1.5,
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: colors.primaryColor,
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: colors.secondaryColor,
+                            width: 1.5,
+                          ),
                         ),
-                      ),
-                      margin: sides.primaryPadding,
-                      height: size.height * 0.1,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          SizedBox(width: size.width * 0.0001),
-                          CircleAvatar(
-                            radius: 25,
-                            backgroundImage: AssetImage(
-                              "assets/images/funny_dp.jpg",
+                        margin: sides.primaryPadding,
+                        height: size.height * 0.1,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            SizedBox(width: size.width * 0.0001),
+                            CircleAvatar(
+                              radius: 25,
+                              backgroundImage: AssetImage(
+                                "assets/images/funny_dp.jpg",
+                              ),
                             ),
-                          ),
-                          Text(
-                            hidedText,
-                            style: GoogleFonts.anekDevanagari(
-                              fontSize: 24,
-                              decoration: TextDecoration.underline,
+                            SizedBox(
+                              width: 120,
+                              child: Text(
+                                hidedText,
+                                style: GoogleFonts.anekDevanagari(fontSize: 24),
+                              ),
                             ),
-                          ),
-                          SizedBox(width: size.width * 0.18),
-                          IconButton(
-                            onPressed: () {},
-                            icon: Icon(Clarity.phone_handset_solid),
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              // showOptions(context, OptionsList());
-                            },
-                            icon: Icon(Clarity.menu_line),
-                          ),
-                          SizedBox(width: size.width * 0.008),
-                        ],
+                            SizedBox(width: size.width * 0.18),
+                            IconButton(
+                              onPressed: () {},
+                              icon: Icon(Clarity.phone_handset_solid),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                favoritedIndex.value = isFavorited
+                                    ? null
+                                    : index;
+                              },
+                              icon: Icon(
+                                isFavorited
+                                    ? Clarity.favorite_solid
+                                    : Clarity.favorite_line,
+                              ),
+                            ),
+                            SizedBox(width: size.width * 0.008),
+                          ],
+                        ),
                       ),
                     );
                   },
