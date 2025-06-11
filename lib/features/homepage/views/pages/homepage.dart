@@ -7,6 +7,7 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:matrimony/features/auth/view/pages/signin_page.dart';
 import 'package:matrimony/features/homepage/helper/text_hide_helper.dart';
 import 'package:matrimony/features/homepage/service/database_service.dart';
+import 'package:matrimony/features/homepage/views/widgets/bottom_navigaton_bar.dart';
 import 'package:matrimony/features/homepage/views/widgets/gender_select_button.dart';
 import 'package:matrimony/utils/colors.dart';
 import 'package:matrimony/utils/dimensions.dart';
@@ -33,6 +34,7 @@ class Homepage extends HookWidget {
       appBar: AppBar(
         backgroundColor: colors.primaryColor,
         title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset("assets/images/matrimony_logo.png", scale: 16),
             Text("Favmate", style: styles.appBarTitleStyle),
@@ -243,6 +245,12 @@ class Homepage extends HookWidget {
             ),
           ),
         ],
+      ),
+      extendBody: true,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 5.0),
+        child: BottomNavBar(),
       ),
     );
   }
