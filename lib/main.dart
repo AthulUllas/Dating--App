@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -12,14 +14,20 @@ void main() async {
   GetStorage.init('dp');
   GetStorage.init('location');
   GetStorage.init('locationpluscode');
-  await Firebase.initializeApp(
-    options: FirebaseOptions(
-      apiKey: "AIzaSyDELHJE4ueIRBlE9u3qdpnJUNUvmoAEWEc",
-      appId: "1:97152258989:android:c3ad71cc48c27d5ffe8724",
-      messagingSenderId: "97152258989",
-      projectId: "matrimony--app",
-    ),
-  );
+  if (Firebase.apps.isEmpty) {
+    if (Platform.isAndroid) {
+      await Firebase.initializeApp(
+        options: FirebaseOptions(
+          apiKey: "AIzaSyDELHJE4ueIRBlE9u3qdpnJUNUvmoAEWEc",
+          appId: "1:97152258989:android:c3ad71cc48c27d5ffe8724",
+          messagingSenderId: "97152258989",
+          projectId: "matrimony--app",
+        ),
+      );
+    } else {
+      await Firebase.initializeApp();
+    }
+  }
   await FirebaseFirestore.instance.clearPersistence();
   runApp(const MyApp());
 }
