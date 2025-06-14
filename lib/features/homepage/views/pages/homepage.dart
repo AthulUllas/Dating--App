@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:matrimony/features/auth/service/firebase_services.dart';
 import 'package:matrimony/features/auth/view/pages/signin_page.dart';
 import 'package:matrimony/features/homepage/helper/text_hide_helper.dart';
 import 'package:matrimony/features/homepage/service/database_service.dart';
@@ -29,6 +30,7 @@ class Homepage extends HookWidget {
     final sides = Dimensions();
     final currentUserUid = FirebaseAuth.instance.currentUser?.uid;
     final favoritedIndex = useState<int?>(null);
+    final authServices = FirebaseServices();
     return Scaffold(
       backgroundColor: colors.scaffoldBackgroundColor,
       appBar: AppBar(
@@ -46,7 +48,7 @@ class Homepage extends HookWidget {
         actions: [
           IconButton(
             onPressed: () {
-              FirebaseAuth.instance.signOut();
+              authServices.signOutUser();
               Navigator.of(context).pushReplacement(
                 PageRouteBuilder(
                   pageBuilder: (context, animation, secondaryAnimation) =>
@@ -248,10 +250,7 @@ class Homepage extends HookWidget {
       ),
       extendBody: true,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 5.0),
-        child: BottomNavBar(),
-      ),
+      bottomNavigationBar: BottomNavBar(),
     );
   }
 }

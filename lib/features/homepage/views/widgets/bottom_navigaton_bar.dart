@@ -1,4 +1,4 @@
-import 'package:dot_navigation_bar/dot_navigation_bar.dart';
+import 'package:awesome_bottom_bar/awesome_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -9,20 +9,22 @@ class BottomNavBar extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    const List<TabItem> items = [
+      TabItem(icon: Clarity.home_solid, title: "Home"),
+      TabItem(icon: Clarity.user_solid, title: "Profile"),
+    ];
     final colors = Colours();
     final indexSelected = useState(0);
-    return DotNavigationBar(
-      items: [
-        DotNavigationBarItem(icon: Icon(Clarity.home_solid)),
-        DotNavigationBarItem(icon: Icon(Clarity.user_solid)),
-      ],
-      currentIndex: indexSelected.value,
+    return BottomBarFloating(
+      items: items,
+      backgroundColor: colors.secondaryTextColor,
+      color: const Color.fromARGB(255, 236, 182, 100),
+      colorSelected: colors.primaryColor,
       onTap: (index) {
         indexSelected.value = index;
       },
-      selectedItemColor: colors.primaryColor,
-      marginR: EdgeInsets.all(0),
-      itemPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 16),
+      indexSelected: indexSelected.value,
+      duration: Duration(milliseconds: 100),
     );
   }
 }

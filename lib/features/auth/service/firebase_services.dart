@@ -49,7 +49,6 @@ class FirebaseServices {
       await googleSignIn.signOut();
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       if (googleUser == null) {
-        snackBar("Cancelled", context, 1, FlashPosition.bottom);
         return false;
       }
 
@@ -67,5 +66,9 @@ class FirebaseServices {
       snackBar(e.toString(), context, 5, FlashPosition.top);
       return false;
     }
+  }
+
+  Future<void> signOutUser() async {
+    await FirebaseAuth.instance.signOut();
   }
 }
