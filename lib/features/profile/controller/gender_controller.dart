@@ -7,29 +7,29 @@ import 'package:matrimony/features/userdetails/services/getstorage_service.dart'
 final databaseFieldServices = DatabaseFieldServices();
 final uid = FirebaseAuth.instance.currentUser?.uid;
 
-class PhoneValueNotifier extends StateNotifier<String?> {
-  PhoneValueNotifier() : super(null) {
-    loadPhone();
+class GenderValueNotifier extends StateNotifier<String?> {
+  GenderValueNotifier() : super(null) {
+    loadGender();
   }
 
-  Future<void> loadPhone() async {
+  Future<void> loadGender() async {
     final isInternetAvailable = await checkConnectivity();
     if (isInternetAvailable) {
-      final name = await databaseFieldServices.getUserField(uid!, 'phone');
+      final name = await databaseFieldServices.getUserField(uid!, 'gender');
       state = name;
     } else {
-      final name = phoneStorage.read('phone');
+      final name = genderStorage.read('gender');
       state = name;
     }
   }
 
   Future<void> refresh() async {
-    await loadPhone();
+    await loadGender();
   }
 }
 
-final phoneController = StateNotifierProvider<PhoneValueNotifier, String?>((
+final genderController = StateNotifierProvider<GenderValueNotifier, String?>((
   ref,
 ) {
-  return PhoneValueNotifier();
+  return GenderValueNotifier();
 });

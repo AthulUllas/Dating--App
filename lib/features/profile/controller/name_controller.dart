@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:matrimony/features/homepage/service/database_service.dart';
+import 'package:matrimony/features/home/service/database_service.dart';
 import 'package:matrimony/features/profile/helper/connectivity_check_helper.dart';
 import 'package:matrimony/features/userdetails/services/getstorage_service.dart';
 

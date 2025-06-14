@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:matrimony/features/auth/service/database_service.dart';
 import 'package:matrimony/features/auth/view/pages/signin_page.dart';
-import 'package:matrimony/features/homepage/views/pages/homepage.dart';
+import 'package:matrimony/features/home/views/pages/homepage.dart';
 import 'package:matrimony/features/userdetails/services/location_service.dart';
 
 Future<void> checkUserExists(BuildContext context) async {

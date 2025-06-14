@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:matrimony/features/profile/controller/dp_controller.dart';
+import 'package:matrimony/features/profile/controller/gender_controller.dart';
 import 'package:matrimony/features/profile/controller/name_controller.dart';
 import 'package:matrimony/features/profile/controller/phone_controller.dart';
 import 'package:matrimony/utils/colors.dart';
@@ -18,6 +19,7 @@ class ProfilePage extends ConsumerWidget {
     final dpValue = ref.watch(dpProvider);
     final nameValue = ref.watch(nameController);
     final phoneValue = ref.watch(phoneController);
+    final genderValue = ref.watch(genderController);
     return Scaffold(
       body: Column(
         children: [
@@ -63,6 +65,7 @@ class ProfilePage extends ConsumerWidget {
                   ),
                 ),
                 Text(phoneValue ?? "No number"),
+                Text(genderValue ?? ""),
               ],
             ),
           ),

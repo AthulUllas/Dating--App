@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:matrimony/features/auth/service/database_service.dart';
 import 'package:matrimony/features/auth/view/widgets/continue_button.dart';
-import 'package:matrimony/features/homepage/views/pages/homepage.dart';
+import 'package:matrimony/features/home/views/pages/homepage.dart';
 import 'package:matrimony/features/userdetails/services/getstorage_service.dart';
 import 'package:matrimony/features/userdetails/view/widgets/gender_button.dart';
 import 'package:matrimony/utils/colors.dart';
