@@ -1,8 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:matrimony/features/profile/controller/dp_controller.dart';
+import 'package:matrimony/features/profile/controller/name_controller.dart';
+import 'package:matrimony/features/profile/controller/phone_controller.dart';
 import 'package:matrimony/utils/colors.dart';
 
 class ProfilePage extends ConsumerWidget {
@@ -13,6 +16,8 @@ class ProfilePage extends ConsumerWidget {
     final colors = Colours();
     final size = MediaQuery.of(context).size;
     final dpValue = ref.watch(dpProvider);
+    final nameValue = ref.watch(nameController);
+    final phoneValue = ref.watch(phoneController);
     return Scaffold(
       body: Column(
         children: [
@@ -50,6 +55,14 @@ class ProfilePage extends ConsumerWidget {
                     ),
                   ),
                 ),
+                Text(
+                  nameValue ?? "No name",
+                  style: GoogleFonts.anekDevanagari(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                Text(phoneValue ?? "No number"),
               ],
             ),
           ),
