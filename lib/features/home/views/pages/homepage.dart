@@ -1,12 +1,9 @@
-import 'package:animations/animations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:matrimony/features/auth/service/firebase_services.dart';
-import 'package:matrimony/features/auth/view/pages/signin_page.dart';
 import 'package:matrimony/features/home/helper/text_hide_helper.dart';
 import 'package:matrimony/features/home/service/database_service.dart';
 import 'package:matrimony/features/home/views/widgets/bottom_navigaton_bar.dart';
@@ -31,7 +28,6 @@ class Homepage extends HookWidget {
     final sides = Dimensions();
     final currentUserUid = FirebaseAuth.instance.currentUser?.uid;
     final favoritedIndex = useState<int?>(null);
-    final authServices = FirebaseServices();
     return Scaffold(
       backgroundColor: colors.scaffoldBackgroundColor,
       appBar: AppBar(
@@ -46,29 +42,6 @@ class Homepage extends HookWidget {
         shape: Border(
           bottom: BorderSide(color: colors.secondaryColor, width: 1),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              authServices.signOutUser();
-              Navigator.of(context).pushReplacement(
-                PageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) =>
-                      SigninPage(),
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) {
-                        return SharedAxisTransition(
-                          animation: animation,
-                          secondaryAnimation: secondaryAnimation,
-                          transitionType: SharedAxisTransitionType.horizontal,
-                          child: child,
-                        );
-                      },
-                ),
-              );
-            },
-            icon: Icon(Clarity.logout_line),
-          ),
-        ],
         automaticallyImplyLeading: false,
       ),
       body: Column(

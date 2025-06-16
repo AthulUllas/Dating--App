@@ -23,6 +23,7 @@ class UserDetailsPage extends HookWidget {
   Widget build(BuildContext context) {
     final nameController = useTextEditingController();
     final phoneController = useTextEditingController();
+    final lastNameController = useTextEditingController();
     final colors = Colours();
     final size = MediaQuery.of(context).size;
     final isChecked = useState(false);
@@ -76,7 +77,14 @@ class UserDetailsPage extends HookWidget {
             TextfieldWidget(
               trailing: Icon(Clarity.user_line),
               controller: nameController,
-              hint: "Name",
+              hint: "First Name",
+              type: TextInputType.name,
+            ),
+            SizedBox(height: 3),
+            TextfieldWidget(
+              trailing: Icon(Clarity.user_line),
+              controller: lastNameController,
+              hint: "Last Name",
               type: TextInputType.name,
             ),
             SizedBox(height: 3),
@@ -120,10 +128,10 @@ class UserDetailsPage extends HookWidget {
                   if (isChecked.value) {
                     if (nameController.text.isNotEmpty &&
                         phoneController.text.isNotEmpty) {
-                      saveDetails(
-                        nameController.text.trim(),
-                        phoneController.text.trim(),
-                      );
+                      final name =
+                          nameController.text.trim() +
+                          lastNameController.text.trim();
+                      saveDetails(name, phoneController.text.trim());
                       Navigator.of(context).push(
                         PageRouteBuilder(
                           pageBuilder:
@@ -143,7 +151,7 @@ class UserDetailsPage extends HookWidget {
                       );
                       final location = await getLocation();
                       databaseStorage.updateUserDetailsInDatabase(
-                        nameController.text.trim(),
+                        name,
                         phoneController.text.trim(),
                         context,
                         location ?? "No location",
