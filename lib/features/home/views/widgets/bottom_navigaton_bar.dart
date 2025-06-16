@@ -20,7 +20,7 @@ class BottomNavBar extends HookWidget {
     return BottomBarFloating(
       items: items,
       backgroundColor: colors.secondaryTextColor,
-      color: const Color.fromARGB(255, 236, 182, 100),
+      color: const Color.fromARGB(255, 168, 205, 202),
       colorSelected: colors.primaryColor,
       onTap: (index) {
         if (index == 1) {

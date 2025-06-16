@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:matrimony/features/auth/service/firebase_services.dart';
 import 'package:matrimony/features/auth/view/pages/signin_page.dart';
 import 'package:matrimony/features/home/helper/text_hide_helper.dart';
@@ -165,7 +166,12 @@ class Homepage extends HookWidget {
               ),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return Center(
+                    child: LoadingAnimationWidget.staggeredDotsWave(
+                      color: colors.primaryTextColor,
+                      size: 50,
+                    ),
+                  );
                 } else if (snapshot.hasError) {
                   return Center(
                     child: Text(
@@ -193,7 +199,7 @@ class Homepage extends HookWidget {
                       padding: const EdgeInsets.only(bottom: 8.0),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: colors.primaryColor,
+                          color: colors.secondaryColor,
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
                             color: colors.secondaryColor,

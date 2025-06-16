@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:matrimony/features/splashscreen/helper/checkuserexist_helper.dart';
+import 'package:matrimony/features/splash/helper/checkuserexist_helper.dart';
 import 'package:matrimony/utils/colors.dart';
 
 class Splashscreen extends StatefulWidget {
