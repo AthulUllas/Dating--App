@@ -15,11 +15,11 @@ class PhoneValueNotifier extends StateNotifier<String?> {
   Future<void> loadPhone() async {
     final isInternetAvailable = await checkConnectivity();
     if (isInternetAvailable) {
-      final name = await databaseFieldServices.getUserField(uid!, 'phone');
-      state = name;
+      final phone = await databaseFieldServices.getUserField(uid!, 'phone');
+      state = phone;
     } else {
-      final name = phoneStorage.read('phone');
-      state = name;
+      final phone = phoneStorage.read('phone');
+      state = phone;
     }
   }
 

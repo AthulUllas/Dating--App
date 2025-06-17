@@ -1,24 +1,19 @@
-import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:matrimony/features/userdetails/services/getstorage_service.dart';
-import 'package:matrimony/utils/snackbar.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 Future<String> getCurrentLocation(BuildContext context) async {
   bool isServiceEnabled;
   isServiceEnabled = await Geolocator.isLocationServiceEnabled();
   if (!isServiceEnabled) {
-    snackBar("Please enable location services", context, 2, FlashPosition.top);
     return "Location services are disabled";
   }
   LocationPermission permission = await Geolocator.checkPermission();
   if (permission == LocationPermission.denied) {
-    snackBar("Allow the location service", context, 1, FlashPosition.top);
     permission = await Geolocator.requestPermission();
     if (permission == LocationPermission.denied) {
-      snackBar("Allow for further detailing", context, 1, FlashPosition.top);
       return "Permission denied";
     }
   }

@@ -15,11 +15,11 @@ class GenderValueNotifier extends StateNotifier<String?> {
   Future<void> loadGender() async {
     final isInternetAvailable = await checkConnectivity();
     if (isInternetAvailable) {
-      final name = await databaseFieldServices.getUserField(uid!, 'gender');
-      state = name;
+      final gender = await databaseFieldServices.getUserField(uid!, 'gender');
+      state = gender;
     } else {
-      final name = genderStorage.read('gender');
-      state = name;
+      final gender = genderStorage.read('gender');
+      state = gender;
     }
   }
 

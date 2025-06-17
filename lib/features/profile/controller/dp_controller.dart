@@ -8,6 +8,10 @@ class DpValueNotifier extends StateNotifier<String> {
     state = newDp;
     dpStorage.write('dp', newDp);
   }
+
+  void refresh() {
+    state = dpStorage.read('dp');
+  }
 }
 
 final dpProvider = StateNotifierProvider<DpValueNotifier, String>((ref) {
