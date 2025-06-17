@@ -28,6 +28,13 @@ class Homepage extends HookWidget {
     final sides = Dimensions();
     final currentUserUid = FirebaseAuth.instance.currentUser?.uid;
     final favoritedIndex = useState<int?>(null);
+    Future<void> onRefresh() async {
+      await databaseFieldService.getGenderSpecifiedUsers(
+        gender.value,
+        currentUserUid!,
+      );
+    }
+
     return Scaffold(
       backgroundColor: colors.scaffoldBackgroundColor,
       appBar: AppBar(
@@ -161,66 +168,74 @@ class Homepage extends HookWidget {
                   );
                 }
                 final users = snapshot.data;
-                return ListView.builder(
-                  itemCount: users?.length,
-                  itemBuilder: (context, index) {
-                    final isFavorited = favoritedIndex.value == index;
-                    final user = users?[index];
-                    final name = user?['name'];
-                    final hidedText = hideText(name);
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: colors.secondaryColor,
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
+                return RefreshIndicator(
+                  onRefresh: () async {
+                    onRefresh;
+                  },
+                  displacement: 10,
+                  child: ListView.builder(
+                    itemCount: users?.length,
+                    itemBuilder: (context, index) {
+                      final isFavorited = favoritedIndex.value == index;
+                      final user = users?[index];
+                      final name = user?['name'];
+                      final hidedText = hideText(name);
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
                             color: colors.secondaryColor,
-                            width: 1.5,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: colors.secondaryColor,
+                              width: 1.5,
+                            ),
+                          ),
+                          margin: sides.primaryPadding,
+                          height: size.height * 0.1,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              SizedBox(width: size.width * 0.0001),
+                              CircleAvatar(
+                                radius: 25,
+                                backgroundImage: AssetImage(
+                                  "assets/images/funny_dp.jpg",
+                                ),
+                              ),
+                              SizedBox(
+                                width: 120,
+                                child: Text(
+                                  hidedText,
+                                  style: GoogleFonts.anekDevanagari(
+                                    fontSize: 24,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: size.width * 0.18),
+                              IconButton(
+                                onPressed: () {},
+                                icon: Icon(Clarity.phone_handset_solid),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  favoritedIndex.value = isFavorited
+                                      ? null
+                                      : index;
+                                },
+                                icon: Icon(
+                                  isFavorited
+                                      ? Clarity.favorite_solid
+                                      : Clarity.favorite_line,
+                                ),
+                              ),
+                              SizedBox(width: size.width * 0.008),
+                            ],
                           ),
                         ),
-                        margin: sides.primaryPadding,
-                        height: size.height * 0.1,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            SizedBox(width: size.width * 0.0001),
-                            CircleAvatar(
-                              radius: 25,
-                              backgroundImage: AssetImage(
-                                "assets/images/funny_dp.jpg",
-                              ),
-                            ),
-                            SizedBox(
-                              width: 120,
-                              child: Text(
-                                hidedText,
-                                style: GoogleFonts.anekDevanagari(fontSize: 24),
-                              ),
-                            ),
-                            SizedBox(width: size.width * 0.18),
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(Clarity.phone_handset_solid),
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                favoritedIndex.value = isFavorited
-                                    ? null
-                                    : index;
-                              },
-                              icon: Icon(
-                                isFavorited
-                                    ? Clarity.favorite_solid
-                                    : Clarity.favorite_line,
-                              ),
-                            ),
-                            SizedBox(width: size.width * 0.008),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 );
               },
             ),
