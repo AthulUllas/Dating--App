@@ -132,7 +132,6 @@ class ProfilePage extends ConsumerWidget {
                   trailing: Icon(Bootstrap.arrow_right),
                   visualDensity: VisualDensity(vertical: 2),
                   onTap: () {
-                    debugPrint("Tapped");
                     authServices.signOutUser();
                     Navigator.of(context).pushAndRemoveUntil(
                       PageRouteBuilder(
