@@ -44,6 +44,7 @@ class ProfilePage extends ConsumerWidget {
       body: SmartRefresher(
         controller: refreshController,
         onRefresh: onRefresh,
+        physics: ScrollPhysics(),
         header: CustomHeader(
           height: 35,
           completeDuration: Duration(milliseconds: 1),
@@ -83,7 +84,7 @@ class ProfilePage extends ConsumerWidget {
               nameValue ?? "No name",
               textAlign: TextAlign.center,
               style: GoogleFonts.cherryCreamSoda(
-                fontSize: 32,
+                fontSize: size.width * 0.07,
                 fontWeight: FontWeight.w400,
               ),
             ),
@@ -91,7 +92,7 @@ class ProfilePage extends ConsumerWidget {
               phoneValue ?? "No number",
               textAlign: TextAlign.center,
               style: GoogleFonts.anekDevanagari(
-                fontSize: 18,
+                fontSize: size.width * 0.038,
                 color: colors.hintColor,
               ),
             ),
@@ -107,7 +108,7 @@ class ProfilePage extends ConsumerWidget {
                   "Edit Profile",
                   style: GoogleFonts.anekDevanagari(
                     color: colors.secondaryTextColor,
-                    fontSize: 22,
+                    fontSize: size.width * 0.045,
                   ),
                 ),
               ),
@@ -129,7 +130,9 @@ class ProfilePage extends ConsumerWidget {
                     ),
                     title: Text(
                       "Push Notifications",
-                      style: GoogleFonts.anekDevanagari(fontSize: 20),
+                      style: GoogleFonts.anekDevanagari(
+                        fontSize: size.width * 0.04,
+                      ),
                     ),
                     trailing: Icon(Bootstrap.arrow_right),
                     visualDensity: VisualDensity(vertical: 2),
@@ -142,7 +145,9 @@ class ProfilePage extends ConsumerWidget {
                     ),
                     title: Text(
                       "Privacy Policy",
-                      style: GoogleFonts.anekDevanagari(fontSize: 20),
+                      style: GoogleFonts.anekDevanagari(
+                        fontSize: size.width * 0.04,
+                      ),
                     ),
                     trailing: Icon(Bootstrap.arrow_right),
                     visualDensity: VisualDensity(vertical: 2),
@@ -155,7 +160,9 @@ class ProfilePage extends ConsumerWidget {
                     ),
                     title: Text(
                       "Support",
-                      style: GoogleFonts.anekDevanagari(fontSize: 20),
+                      style: GoogleFonts.anekDevanagari(
+                        fontSize: size.width * 0.04,
+                      ),
                     ),
                     trailing: Icon(Bootstrap.arrow_right),
                     visualDensity: VisualDensity(vertical: 2),
@@ -168,7 +175,9 @@ class ProfilePage extends ConsumerWidget {
                     ),
                     title: Text(
                       "Log out",
-                      style: GoogleFonts.anekDevanagari(fontSize: 20),
+                      style: GoogleFonts.anekDevanagari(
+                        fontSize: size.width * 0.04,
+                      ),
                     ),
                     trailing: Icon(Bootstrap.arrow_right),
                     visualDensity: VisualDensity(vertical: 2),

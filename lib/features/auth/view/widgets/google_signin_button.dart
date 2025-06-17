@@ -12,12 +12,13 @@ class GoogleSigninButton extends StatelessWidget {
     final colors = Colours();
     final sides = Dimensions();
     final styles = Fontstyle();
+    final size = MediaQuery.of(context).size;
     return Container(
       decoration: BoxDecoration(
         border: Border.all(width: 1, color: colors.secondaryColor),
         borderRadius: BorderRadius.circular(10),
       ),
-      height: 50,
+      height: size.height * 0.045,
       margin: sides.primaryPadding,
       child: Center(
         child: Row(

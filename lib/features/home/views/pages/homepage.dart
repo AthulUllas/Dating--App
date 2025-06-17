@@ -72,7 +72,7 @@ class Homepage extends HookWidget {
               text: Text(
                 "Male Users",
                 style: GoogleFonts.anekDevanagari(
-                  fontSize: 18,
+                  fontSize: size.width * 0.036,
                   fontWeight: FontWeight.w500,
                   color: isMaleTapped.value
                       ? colors.secondaryTextColor
@@ -100,7 +100,7 @@ class Homepage extends HookWidget {
               text: Text(
                 "Female Users",
                 style: GoogleFonts.anekDevanagari(
-                  fontSize: 18,
+                  fontSize: size.width * 0.036,
                   fontWeight: FontWeight.w500,
                   color: isFemaleTapped.value
                       ? colors.secondaryTextColor
@@ -128,7 +128,7 @@ class Homepage extends HookWidget {
               text: Text(
                 "Gay/Les",
                 style: GoogleFonts.anekDevanagari(
-                  fontSize: 18,
+                  fontSize: size.width * 0.036,
                   fontWeight: FontWeight.w500,
                   color: isOtherTapped.value
                       ? colors.secondaryTextColor
@@ -208,7 +208,7 @@ class Homepage extends HookWidget {
                                 child: Text(
                                   hidedText,
                                   style: GoogleFonts.anekDevanagari(
-                                    fontSize: 24,
+                                    fontSize: size.width * 0.045,
                                   ),
                                 ),
                               ),

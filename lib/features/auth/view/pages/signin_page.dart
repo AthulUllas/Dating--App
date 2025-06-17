@@ -207,8 +207,8 @@ class SigninPage extends HookWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Don't have an account,",
-                  style: GoogleFonts.mandali(fontSize: 16),
+                  "Don't have an account?",
+                  style: GoogleFonts.mandali(fontSize: size.width * 0.035),
                 ),
                 SizedBox(width: 5),
                 GestureDetector(
@@ -233,7 +233,7 @@ class SigninPage extends HookWidget {
                   child: Text(
                     "Sign Up",
                     style: GoogleFonts.mandali(
-                      fontSize: 18,
+                      fontSize: size.width * 0.036,
                       color: Colors.blue,
                       fontWeight: FontWeight.bold,
                     ),
