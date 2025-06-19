@@ -9,6 +9,7 @@ import 'package:matrimony/features/home/service/database_service.dart';
 import 'package:matrimony/features/profile/controller/dp_controller.dart';
 import 'package:matrimony/features/profile/views/widgets/editprofile_field.dart';
 import 'package:matrimony/utils/colors.dart';
+import 'package:matrimony/utils/dimensions.dart';
 import 'package:matrimony/utils/fontstyle.dart';
 
 class EditprofilePage extends HookConsumerWidget {
@@ -23,6 +24,10 @@ class EditprofilePage extends HookConsumerWidget {
     final databaseFieldServices = DatabaseFieldServices();
     final currentUserUid = FirebaseAuth.instance.currentUser!.uid;
     final nameController = useTextEditingController();
+    final phoneController = useTextEditingController();
+    final emailController = useTextEditingController();
+    final sides = Dimensions();
+    final size = MediaQuery.of(context).size;
     Future<void> pickImage() async {
       final imagepicker = ImagePicker();
       final pickedImage = await imagepicker.pickImage(
@@ -42,69 +47,142 @@ class EditprofilePage extends HookConsumerWidget {
         centerTitle: true,
       ),
       body: Center(
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                Container(
-                  width: 110,
-                  height: 110,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(70),
-                    border: Border.all(width: 1.5, color: colors.primaryColor),
-                    image: DecorationImage(
-                      image: imageFile.value != null
-                          ? FileImage(imageFile.value!)
-                          : dpValue.isEmpty
-                          ? AssetImage("assets/images/user_logo.png")
-                          : FileImage(File(dpValue)),
-                      fit: BoxFit.cover,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Stack(
+                alignment: AlignmentDirectional.center,
+                children: [
+                  Container(
+                    width: 110,
+                    height: 110,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(70),
+                      border: Border.all(
+                        width: 1.5,
+                        color: colors.primaryColor,
+                      ),
+                      image: DecorationImage(
+                        image: imageFile.value != null
+                            ? FileImage(imageFile.value!)
+                            : dpValue.isEmpty
+                            ? AssetImage("assets/images/user_logo.png")
+                            : FileImage(File(dpValue)),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: GestureDetector(
-                    onTap: () {
+                  Container(
+                    width: 110,
+                    height: 110,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(70),
+                      color: Color.fromARGB(100, 0, 0, 0),
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
                       pickImage();
                     },
-                    child: Container(
-                      padding: EdgeInsets.all(2),
-                      decoration: BoxDecoration(
-                        color: colors.secondaryTextColor,
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 4,
-                            offset: Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Icon(Clarity.edit_solid, size: 18),
+                    icon: Icon(
+                      Clarity.camera_line,
+                      color: Colors.white,
+                      size: 32,
                     ),
                   ),
-                ),
-              ],
-            ),
-            FutureBuilder(
-              future: databaseFieldServices.getUserField(
-                currentUserUid,
-                'name',
+                ],
               ),
-              builder: (context, snapshot) {
-                final name = snapshot.data;
-                return EditprofileField(
-                  controller: nameController,
-                  type: TextInputType.name,
-                  hintText: name ?? "Name",
-                  field: "Full Name",
-                  leading: Clarity.user_line,
-                );
-              },
-            ),
-          ],
+              FutureBuilder(
+                future: databaseFieldServices.getUserField(
+                  currentUserUid,
+                  'name',
+                ),
+                builder: (context, snapshot) {
+                  final name = snapshot.data;
+                  return EditprofileField(
+                    controller: nameController,
+                    type: TextInputType.name,
+                    hintText: name ?? "Name",
+                    field: "Full Name",
+                    leading: Clarity.user_line,
+                  );
+                },
+              ),
+              FutureBuilder(
+                future: databaseFieldServices.getUserField(
+                  currentUserUid,
+                  'phone',
+                ),
+                builder: (context, snapshot) {
+                  final phone = snapshot.data;
+                  return EditprofileField(
+                    hintText: phone ?? "Phone",
+                    controller: phoneController,
+                    type: TextInputType.phone,
+                    field: "Phone number",
+                    leading: Clarity.phone_handset_line,
+                  );
+                },
+              ),
+              FutureBuilder(
+                future: databaseFieldServices.getUserField(
+                  currentUserUid,
+                  'email',
+                ),
+                builder: (context, snapshot) {
+                  final email = snapshot.data;
+                  return EditprofileField(
+                    hintText: email ?? "E-mail",
+                    controller: emailController,
+                    type: TextInputType.emailAddress,
+                    field: "E-mail",
+                    leading: Clarity.email_line,
+                  );
+                },
+              ),
+              FutureBuilder(
+                future: databaseFieldServices.getUserField(
+                  currentUserUid,
+                  'gender',
+                ),
+                builder: (context, snapshot) {
+                  final gender = snapshot.data;
+                  return Container(
+                    margin: sides.editProfilePadding,
+                    height: size.height * 0.08,
+                    decoration: BoxDecoration(
+                      color: colors.secondaryTextColor,
+                      border: Border.all(
+                        color: colors.primaryColor,
+                        width: 0.1,
+                      ),
+                      borderRadius: BorderRadius.circular(7),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                left: 16.0,
+                                top: 8,
+                              ),
+                              child: Text(
+                                "Gender",
+                                style: styles.editProfileTextStyle,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(children: []),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
