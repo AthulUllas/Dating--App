@@ -10,6 +10,7 @@ import 'package:matrimony/features/auth/view/pages/signin_page.dart';
 import 'package:matrimony/features/profile/controller/dp_controller.dart';
 import 'package:matrimony/features/profile/controller/name_controller.dart';
 import 'package:matrimony/features/profile/controller/phone_controller.dart';
+import 'package:matrimony/features/profile/views/pages/editprofile_page.dart';
 import 'package:matrimony/features/profile/views/widgets/custom_divider.dart';
 import 'package:matrimony/utils/colors.dart';
 import 'package:matrimony/utils/dimensions.dart';
@@ -40,7 +41,8 @@ class ProfilePage extends ConsumerWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(automaticallyImplyLeading: true),
+      backgroundColor: colors.scaffoldBackgroundColor,
+      appBar: AppBar(backgroundColor: colors.scaffoldBackgroundColor),
       body: SmartRefresher(
         controller: refreshController,
         onRefresh: onRefresh,
@@ -96,19 +98,38 @@ class ProfilePage extends ConsumerWidget {
                 color: colors.hintColor,
               ),
             ),
-            Container(
-              height: size.height * 0.05,
-              width: size.width * 0.35,
-              decoration: BoxDecoration(
-                color: colors.primaryTextColor,
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: Center(
-                child: Text(
-                  "Edit Profile",
-                  style: GoogleFonts.anekDevanagari(
-                    color: colors.secondaryTextColor,
-                    fontSize: size.width * 0.045,
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) =>
+                        EditprofilePage(),
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                          return SharedAxisTransition(
+                            animation: animation,
+                            secondaryAnimation: secondaryAnimation,
+                            transitionType: SharedAxisTransitionType.horizontal,
+                            child: child,
+                          );
+                        },
+                  ),
+                );
+              },
+              child: Container(
+                height: size.height * 0.05,
+                width: size.width * 0.35,
+                decoration: BoxDecoration(
+                  color: colors.primaryTextColor,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Center(
+                  child: Text(
+                    "Edit Profile",
+                    style: GoogleFonts.anekDevanagari(
+                      color: colors.secondaryTextColor,
+                      fontSize: size.width * 0.045,
+                    ),
                   ),
                 ),
               ),
@@ -170,13 +191,30 @@ class ProfilePage extends ConsumerWidget {
                   CustomDivider(),
                   ListTile(
                     leading: Icon(
+                      Clarity.info_circle_solid,
+                      color: colors.primaryColor,
+                    ),
+                    title: Text(
+                      "About Us",
+                      style: GoogleFonts.anekDevanagari(
+                        fontSize: size.width * 0.04,
+                      ),
+                    ),
+                    trailing: Icon(Bootstrap.arrow_right),
+                    visualDensity: VisualDensity(vertical: 2),
+                  ),
+                  CustomDivider(),
+                  ListTile(
+                    leading: Icon(
                       Clarity.logout_solid,
                       color: colors.primaryColor,
                     ),
                     title: Text(
                       "Log out",
                       style: GoogleFonts.anekDevanagari(
-                        fontSize: size.width * 0.04,
+                        fontSize: size.width * 0.05,
+                        color: Colors.red,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                     trailing: Icon(Bootstrap.arrow_right),
@@ -206,7 +244,7 @@ class ProfilePage extends ConsumerWidget {
                 ],
               ),
             ),
-            SizedBox(height: size.height * 0.25),
+            SizedBox(height: size.height * 0.2),
           ],
         ),
       ),

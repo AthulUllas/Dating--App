@@ -136,7 +136,7 @@ class GenderPage extends HookWidget {
                   }
                   saveGender(gender);
                   databaseServices.updateGenderInDatabase(
-                    gender.toString(),
+                    gender ?? "No Gender",
                     context,
                   );
                   Navigator.of(context).pushAndRemoveUntil(

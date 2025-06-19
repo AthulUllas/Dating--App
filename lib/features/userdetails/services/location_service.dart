@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:matrimony/features/userdetails/services/getstorage_service.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 Future<String> getCurrentLocation(BuildContext context) async {
   bool isServiceEnabled;
@@ -19,7 +18,7 @@ Future<String> getCurrentLocation(BuildContext context) async {
   }
 
   if (permission == LocationPermission.deniedForever) {
-    openAppSettings();
+    return "Permission denied forever";
   }
 
   try {
@@ -54,7 +53,7 @@ Future<String> getAddressFromLatlng(Position position) async {
     return address;
   } catch (e) {
     debugPrint(
-      "<---------------------------------------------${e.toString()}------------------------------------------------------->",
+      "<-----------------------------------------${e.toString()}---------------------------------------------->",
     );
     return e.toString();
   }
