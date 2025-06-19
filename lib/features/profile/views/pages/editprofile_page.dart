@@ -1,13 +1,14 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:matrimony/features/profile/controller/dp_controller.dart';
 import 'package:matrimony/utils/colors.dart';
 import 'package:matrimony/utils/fontstyle.dart';
 
-class EditprofilePage extends ConsumerWidget {
+class EditprofilePage extends HookConsumerWidget {
   const EditprofilePage({super.key});
 
   @override
@@ -15,6 +16,18 @@ class EditprofilePage extends ConsumerWidget {
     final styles = Fontstyle();
     final colors = Colours();
     final dpValue = ref.watch(dpProvider);
+    final imageFile = useState<File?>(null);
+    Future<void> pickImage() async {
+      final imagepicker = ImagePicker();
+      final pickedImage = await imagepicker.pickImage(
+        source: ImageSource.gallery,
+      );
+      if (pickedImage != null) {
+        final file = File(pickedImage.path);
+        imageFile.value = file;
+      }
+    }
+
     return Scaffold(
       backgroundColor: colors.scaffoldBackgroundColor,
       appBar: AppBar(
@@ -34,7 +47,9 @@ class EditprofilePage extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(70),
                     border: Border.all(width: 1.5, color: colors.primaryColor),
                     image: DecorationImage(
-                      image: dpValue.isEmpty
+                      image: imageFile.value != null
+                          ? FileImage(imageFile.value!)
+                          : dpValue.isEmpty
                           ? AssetImage("assets/images/user_logo.png")
                           : FileImage(File(dpValue)),
                       fit: BoxFit.cover,
@@ -46,7 +61,7 @@ class EditprofilePage extends ConsumerWidget {
                   right: 0,
                   child: GestureDetector(
                     onTap: () {
-                      debugPrint("Tapped...!");
+                      pickImage();
                     },
                     child: Container(
                       padding: EdgeInsets.all(2),
