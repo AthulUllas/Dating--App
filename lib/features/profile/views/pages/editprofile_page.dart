@@ -1,10 +1,13 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:matrimony/features/home/service/database_service.dart';
 import 'package:matrimony/features/profile/controller/dp_controller.dart';
+import 'package:matrimony/features/profile/views/widgets/editprofile_field.dart';
 import 'package:matrimony/utils/colors.dart';
 import 'package:matrimony/utils/fontstyle.dart';
 
@@ -17,6 +20,9 @@ class EditprofilePage extends HookConsumerWidget {
     final colors = Colours();
     final dpValue = ref.watch(dpProvider);
     final imageFile = useState<File?>(null);
+    final databaseFieldServices = DatabaseFieldServices();
+    final currentUserUid = FirebaseAuth.instance.currentUser!.uid;
+    final nameController = useTextEditingController();
     Future<void> pickImage() async {
       final imagepicker = ImagePicker();
       final pickedImage = await imagepicker.pickImage(
@@ -41,8 +47,8 @@ class EditprofilePage extends HookConsumerWidget {
             Stack(
               children: [
                 Container(
-                  width: 130,
-                  height: 130,
+                  width: 110,
+                  height: 110,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(70),
                     border: Border.all(width: 1.5, color: colors.primaryColor),
@@ -81,6 +87,22 @@ class EditprofilePage extends HookConsumerWidget {
                   ),
                 ),
               ],
+            ),
+            FutureBuilder(
+              future: databaseFieldServices.getUserField(
+                currentUserUid,
+                'name',
+              ),
+              builder: (context, snapshot) {
+                final name = snapshot.data;
+                return EditprofileField(
+                  controller: nameController,
+                  type: TextInputType.name,
+                  hintText: name ?? "Name",
+                  field: "Full Name",
+                  leading: Clarity.user_line,
+                );
+              },
             ),
           ],
         ),

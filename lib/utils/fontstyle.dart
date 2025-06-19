@@ -40,4 +40,9 @@ class Fontstyle {
     fontWeight: FontWeight.w500,
     fontSize: 20,
   );
+
+  final editProfileTextStyle = GoogleFonts.balooChettan2(
+    fontSize: 20,
+    fontWeight: FontWeight.w500,
+  );
 }
