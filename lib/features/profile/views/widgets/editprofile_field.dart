@@ -12,6 +12,7 @@ class EditprofileField extends StatelessWidget {
     required this.type,
     required this.field,
     required this.leading,
+    this.trailing,
   });
 
   final String hintText;
@@ -19,6 +20,7 @@ class EditprofileField extends StatelessWidget {
   final TextInputType type;
   final String field;
   final IconData leading;
+  final Widget? trailing;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +67,7 @@ class EditprofileField extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 20.0),
-                child: Icon(Clarity.pencil_line, size: 18),
+                child: trailing ?? Icon(Clarity.pencil_line, size: 18),
               ),
             ],
           ),
