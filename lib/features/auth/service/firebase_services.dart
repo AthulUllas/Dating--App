@@ -72,13 +72,15 @@ class FirebaseServices {
     await FirebaseAuth.instance.signOut();
   }
 
-  Future<void> updateUserEmail(String newMail) async {
+  Future<bool?> updateUserEmail(String newMail) async {
     try {
       await FirebaseAuth.instance.currentUser!.verifyBeforeUpdateEmail(newMail);
+      return true;
     } catch (e) {
       debugPrint(
         "<-------------------------${e.toString()}---------------------------->",
       );
+      return false;
     }
   }
 }
