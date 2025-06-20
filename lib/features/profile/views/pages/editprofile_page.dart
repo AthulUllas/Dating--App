@@ -40,6 +40,9 @@ class EditprofilePage extends HookConsumerWidget {
       }
     }
 
+    final List<String> genderList = ['Male', 'Female', 'Other'];
+    final selectedGender = useState('Male');
+
     return Scaffold(
       backgroundColor: colors.scaffoldBackgroundColor,
       appBar: AppBar(
@@ -48,7 +51,9 @@ class EditprofilePage extends HookConsumerWidget {
         centerTitle: true,
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
+          SizedBox(height: size.height * 0.1),
           Stack(
             alignment: AlignmentDirectional.center,
             children: [
@@ -84,6 +89,8 @@ class EditprofilePage extends HookConsumerWidget {
               ),
             ],
           ),
+          Text("Profile Photo", style: styles.editProfileTextStyle),
+          SizedBox(height: size.height * 0.05),
           FutureBuilder(
             future: databaseFieldServices.getUserField(currentUserUid, 'name'),
             builder: (context, snapshot) {
@@ -97,6 +104,7 @@ class EditprofilePage extends HookConsumerWidget {
               );
             },
           ),
+          SizedBox(height: 3),
           FutureBuilder(
             future: databaseFieldServices.getUserField(currentUserUid, 'phone'),
             builder: (context, snapshot) {
@@ -110,6 +118,7 @@ class EditprofilePage extends HookConsumerWidget {
               );
             },
           ),
+          SizedBox(height: 3),
           FutureBuilder(
             future: databaseFieldServices.getUserField(currentUserUid, 'email'),
             builder: (context, snapshot) {
@@ -129,9 +138,10 @@ class EditprofilePage extends HookConsumerWidget {
               );
             },
           ),
+          SizedBox(height: 3),
           Container(
             margin: sides.editProfilePadding,
-            height: size.height * 0.08,
+            height: size.height * 0.1,
             decoration: BoxDecoration(
               color: colors.secondaryTextColor,
               border: Border.all(color: colors.primaryColor, width: 0.1),
@@ -154,12 +164,36 @@ class EditprofilePage extends HookConsumerWidget {
                       padding: const EdgeInsets.only(left: 22.0),
                       child: Icon(Bootstrap.rainbow),
                     ),
-                    SizedBox(width: 18),
+                    SizedBox(width: 20),
+                    Expanded(
+                      child: DropdownButtonFormField(
+                        decoration: InputDecoration(
+                          labelText: "Select gender",
+                          border: OutlineInputBorder(),
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: 0,
+                            horizontal: 16,
+                          ),
+                        ),
+                        value: selectedGender.value,
+                        items: genderList.map((gender) {
+                          return DropdownMenuItem<String>(
+                            value: gender,
+                            child: Text(gender),
+                          );
+                        }).toList(),
+                        onChanged: (newValue) {
+                          selectedGender.value = newValue!;
+                        },
+                      ),
+                    ),
+                    SizedBox(width: size.width * 0.04),
                   ],
                 ),
               ],
             ),
           ),
+          SizedBox(height: size.height * 0.2),
         ],
       ),
     );
