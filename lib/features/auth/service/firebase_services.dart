@@ -83,4 +83,21 @@ class FirebaseServices {
       return false;
     }
   }
+
+  Future<void> reAuthenticateUser(String email, String password) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      try {
+        final cred = EmailAuthProvider.credential(
+          email: email,
+          password: password,
+        );
+        await user.reauthenticateWithCredential(cred);
+      } catch (e) {
+        debugPrint(
+          "<----------------------${e.toString()}------------------------>",
+        );
+      }
+    }
+  }
 }
