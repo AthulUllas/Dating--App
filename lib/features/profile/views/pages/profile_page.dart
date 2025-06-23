@@ -65,187 +65,197 @@ class ProfilePage extends ConsumerWidget {
             return Center(child: body);
           },
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Container(
-              width: 100,
-              height: 100,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
-                border: Border.all(width: 1.5, color: colors.primaryColor),
-                image: DecorationImage(
-                  image: dpValue.isEmpty
-                      ? AssetImage("assets/images/user_logo.png")
-                      : FileImage(File(dpValue)),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            Text(
-              nameValue ?? "No name",
-              textAlign: TextAlign.center,
-              style: GoogleFonts.cherryCreamSoda(
-                fontSize: size.width * 0.07,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            Text(
-              phoneValue ?? "No number",
-              textAlign: TextAlign.center,
-              style: GoogleFonts.anekDevanagari(
-                fontSize: size.width * 0.038,
-                color: colors.hintColor,
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation, secondaryAnimation) =>
-                        EditprofilePage(),
-                    transitionsBuilder:
-                        (context, animation, secondaryAnimation, child) {
-                          return SharedAxisTransition(
-                            animation: animation,
-                            secondaryAnimation: secondaryAnimation,
-                            transitionType: SharedAxisTransitionType.horizontal,
-                            child: child,
-                          );
-                        },
-                  ),
-                );
-              },
-              child: Container(
-                height: size.height * 0.05,
-                width: size.width * 0.35,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(height: size.height * 0.03),
+              Container(
+                width: 100,
+                height: 100,
                 decoration: BoxDecoration(
-                  color: colors.primaryTextColor,
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(50),
+                  border: Border.all(width: 1.5, color: colors.primaryColor),
+                  image: DecorationImage(
+                    image: dpValue.isEmpty
+                        ? AssetImage("assets/images/user_logo.png")
+                        : FileImage(File(dpValue)),
+                    fit: BoxFit.cover,
+                  ),
                 ),
-                child: Center(
-                  child: Text(
-                    "Edit Profile",
-                    style: GoogleFonts.anekDevanagari(
-                      color: colors.secondaryTextColor,
-                      fontSize: size.width * 0.045,
+              ),
+              SizedBox(height: size.height * 0.01),
+              Text(
+                nameValue ?? "No name",
+                textAlign: TextAlign.center,
+                style: GoogleFonts.cherryCreamSoda(
+                  fontSize: size.width * 0.07,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              SizedBox(height: size.height * 0.01),
+              Text(
+                phoneValue ?? "No number",
+                textAlign: TextAlign.center,
+                style: GoogleFonts.anekDevanagari(
+                  fontSize: size.width * 0.038,
+                  color: colors.hintColor,
+                ),
+              ),
+              SizedBox(height: size.height * 0.01),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          EditprofilePage(),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                            return SharedAxisTransition(
+                              animation: animation,
+                              secondaryAnimation: secondaryAnimation,
+                              transitionType:
+                                  SharedAxisTransitionType.horizontal,
+                              child: child,
+                            );
+                          },
+                    ),
+                  );
+                },
+                child: Container(
+                  height: size.height * 0.05,
+                  width: size.width * 0.35,
+                  decoration: BoxDecoration(
+                    color: colors.primaryTextColor,
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: Center(
+                    child: Text(
+                      "Edit Profile",
+                      style: GoogleFonts.anekDevanagari(
+                        color: colors.secondaryTextColor,
+                        fontSize: size.width * 0.045,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(height: size.height * 0.15),
-            Container(
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 230, 228, 228),
-                border: Border.all(color: colors.hintColor, width: 0.5),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              margin: sides.primaryPadding,
-              child: Column(
-                children: [
-                  ListTile(
-                    leading: Icon(
-                      Clarity.notification_solid,
-                      color: colors.primaryColor,
-                    ),
-                    title: Text(
-                      "Push Notifications",
-                      style: GoogleFonts.anekDevanagari(
-                        fontSize: size.width * 0.04,
+              SizedBox(height: size.height * 0.13),
+              Container(
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 230, 228, 228),
+                  border: Border.all(color: colors.hintColor, width: 0.5),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                margin: sides.primaryPadding,
+                child: Column(
+                  children: [
+                    ListTile(
+                      leading: Icon(
+                        Clarity.notification_solid,
+                        color: colors.primaryColor,
                       ),
-                    ),
-                    trailing: Icon(Bootstrap.arrow_right),
-                    visualDensity: VisualDensity(vertical: 2),
-                  ),
-                  CustomDivider(),
-                  ListTile(
-                    leading: Icon(
-                      Clarity.note_solid,
-                      color: colors.primaryColor,
-                    ),
-                    title: Text(
-                      "Privacy Policy",
-                      style: GoogleFonts.anekDevanagari(
-                        fontSize: size.width * 0.04,
-                      ),
-                    ),
-                    trailing: Icon(Bootstrap.arrow_right),
-                    visualDensity: VisualDensity(vertical: 2),
-                  ),
-                  CustomDivider(),
-                  ListTile(
-                    leading: Icon(
-                      Clarity.help_solid,
-                      color: colors.primaryColor,
-                    ),
-                    title: Text(
-                      "Support",
-                      style: GoogleFonts.anekDevanagari(
-                        fontSize: size.width * 0.04,
-                      ),
-                    ),
-                    trailing: Icon(Bootstrap.arrow_right),
-                    visualDensity: VisualDensity(vertical: 2),
-                  ),
-                  CustomDivider(),
-                  ListTile(
-                    leading: Icon(
-                      Clarity.info_circle_solid,
-                      color: colors.primaryColor,
-                    ),
-                    title: Text(
-                      "About Us",
-                      style: GoogleFonts.anekDevanagari(
-                        fontSize: size.width * 0.04,
-                      ),
-                    ),
-                    trailing: Icon(Bootstrap.arrow_right),
-                    visualDensity: VisualDensity(vertical: 2),
-                  ),
-                  CustomDivider(),
-                  ListTile(
-                    leading: Icon(
-                      Clarity.logout_solid,
-                      color: colors.primaryColor,
-                    ),
-                    title: Text(
-                      "Log out",
-                      style: GoogleFonts.anekDevanagari(
-                        fontSize: size.width * 0.05,
-                        color: Colors.red,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    trailing: Icon(Bootstrap.arrow_right),
-                    visualDensity: VisualDensity(vertical: 2),
-                    onTap: () {
-                      authServices.signOutUser();
-                      Navigator.of(context).pushAndRemoveUntil(
-                        PageRouteBuilder(
-                          pageBuilder:
-                              (context, animation, secondaryAnimation) =>
-                                  SigninPage(),
-                          transitionsBuilder:
-                              (context, animation, secondaryAnimation, child) {
-                                return SharedAxisTransition(
-                                  animation: animation,
-                                  secondaryAnimation: secondaryAnimation,
-                                  transitionType:
-                                      SharedAxisTransitionType.horizontal,
-                                  child: child,
-                                );
-                              },
+                      title: Text(
+                        "Push Notifications",
+                        style: GoogleFonts.anekDevanagari(
+                          fontSize: size.width * 0.04,
                         ),
-                        (route) => false,
-                      );
-                    },
-                  ),
-                ],
+                      ),
+                      trailing: Icon(Bootstrap.arrow_right),
+                      visualDensity: VisualDensity(vertical: 2),
+                    ),
+                    CustomDivider(),
+                    ListTile(
+                      leading: Icon(
+                        Clarity.note_solid,
+                        color: colors.primaryColor,
+                      ),
+                      title: Text(
+                        "Privacy Policy",
+                        style: GoogleFonts.anekDevanagari(
+                          fontSize: size.width * 0.04,
+                        ),
+                      ),
+                      trailing: Icon(Bootstrap.arrow_right),
+                      visualDensity: VisualDensity(vertical: 2),
+                    ),
+                    CustomDivider(),
+                    ListTile(
+                      leading: Icon(
+                        Clarity.help_solid,
+                        color: colors.primaryColor,
+                      ),
+                      title: Text(
+                        "Support",
+                        style: GoogleFonts.anekDevanagari(
+                          fontSize: size.width * 0.04,
+                        ),
+                      ),
+                      trailing: Icon(Bootstrap.arrow_right),
+                      visualDensity: VisualDensity(vertical: 2),
+                    ),
+                    CustomDivider(),
+                    ListTile(
+                      leading: Icon(
+                        Clarity.info_circle_solid,
+                        color: colors.primaryColor,
+                      ),
+                      title: Text(
+                        "About Us",
+                        style: GoogleFonts.anekDevanagari(
+                          fontSize: size.width * 0.04,
+                        ),
+                      ),
+                      trailing: Icon(Bootstrap.arrow_right),
+                      visualDensity: VisualDensity(vertical: 2),
+                    ),
+                    CustomDivider(),
+                    ListTile(
+                      leading: Icon(
+                        Clarity.logout_solid,
+                        color: colors.primaryColor,
+                      ),
+                      title: Text(
+                        "Log out",
+                        style: GoogleFonts.anekDevanagari(
+                          fontSize: size.width * 0.05,
+                          color: Colors.red,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      trailing: Icon(Bootstrap.arrow_right),
+                      visualDensity: VisualDensity(vertical: 2),
+                      onTap: () {
+                        authServices.signOutUser();
+                        Navigator.of(context).pushAndRemoveUntil(
+                          PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) =>
+                                    SigninPage(),
+                            transitionsBuilder:
+                                (
+                                  context,
+                                  animation,
+                                  secondaryAnimation,
+                                  child,
+                                ) {
+                                  return SharedAxisTransition(
+                                    animation: animation,
+                                    secondaryAnimation: secondaryAnimation,
+                                    transitionType:
+                                        SharedAxisTransitionType.horizontal,
+                                    child: child,
+                                  );
+                                },
+                          ),
+                          (route) => false,
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: size.height * 0.2),
-          ],
+            ],
+          ),
         ),
       ),
     );

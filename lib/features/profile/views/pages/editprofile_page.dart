@@ -1,17 +1,23 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:matrimony/features/auth/service/database_service.dart';
+import 'package:matrimony/features/auth/view/widgets/continue_button.dart';
 import 'package:matrimony/features/home/service/database_service.dart';
 import 'package:matrimony/features/profile/controller/dp_controller.dart';
 import 'package:matrimony/features/profile/views/widgets/editprofile_field.dart';
+import 'package:matrimony/features/userdetails/services/getstorage_service.dart';
 import 'package:matrimony/utils/colors.dart';
 import 'package:matrimony/utils/dimensions.dart';
 import 'package:matrimony/utils/fontstyle.dart';
+import 'package:matrimony/utils/material_banner.dart';
+import 'package:matrimony/utils/snackbar.dart';
 
 class EditprofilePage extends HookConsumerWidget {
   const EditprofilePage({super.key});
@@ -28,18 +34,23 @@ class EditprofilePage extends HookConsumerWidget {
     final phoneController = useTextEditingController();
     final sides = Dimensions();
     final size = MediaQuery.of(context).size;
+    final databaseServices = DatabaseServices();
     Future<void> pickImage() async {
       final imagepicker = ImagePicker();
-      final pickedImage = await imagepicker.pickImage(
-        source: ImageSource.gallery,
-      );
-      if (pickedImage != null) {
-        final file = File(pickedImage.path);
-        imageFile.value = file;
+      try {
+        final pickedImage = await imagepicker.pickImage(
+          source: ImageSource.gallery,
+        );
+        if (pickedImage != null) {
+          final file = File(pickedImage.path);
+          imageFile.value = file;
+        }
+      } catch (e) {
+        debugPrint(e.toString());
       }
     }
 
-    final List<String> genderList = ['Male', 'Female', 'Other'];
+    const List<String> genderList = ['Male', 'Female', 'Other'];
     String? selectedGender;
 
     return Scaffold(
@@ -196,6 +207,40 @@ class EditprofilePage extends HookConsumerWidget {
                   ),
                 );
               },
+            ),
+            SizedBox(height: size.height * 0.05),
+            GestureDetector(
+              onTap: () {
+                if (nameController.text.trim().isNotEmpty &&
+                    phoneController.text.trim().isNotEmpty &&
+                    selectedGender!.isNotEmpty) {
+                  nameStorage.write('name', nameController.text.trim());
+                  phoneStorage.write('phone', phoneController.text.trim());
+                  genderStorage.write('gender', selectedGender);
+                  if (imageFile.value!.path.isNotEmpty) {
+                    dpStorage.write('dp', imageFile.value!.path);
+                  }
+                  databaseServices.updateNameAndPhone(
+                    nameController.text.trim(),
+                    phoneController.text.trim(),
+                    context,
+                  );
+                  databaseServices.updateGenderInDatabase(
+                    selectedGender ?? "",
+                    context,
+                  );
+                  Navigator.of(context).pop();
+                  banner("Updated", context, 3);
+                } else {
+                  snackBar(
+                    "Fill all the fields",
+                    context,
+                    2,
+                    FlashPosition.top,
+                  );
+                }
+              },
+              child: ContinueButton(),
             ),
           ],
         ),

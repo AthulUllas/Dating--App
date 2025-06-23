@@ -57,6 +57,25 @@ class DatabaseServices {
     }
   }
 
+  Future<void> updateNameAndPhone(
+    String name,
+    String phone,
+    BuildContext context,
+  ) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      try {
+        final uid = user.uid;
+        FirebaseFirestore.instance.collection('users').doc(uid).update({
+          'name': name,
+          'phone': phone,
+        });
+      } catch (e) {
+        debugPrint(e.toString());
+      }
+    }
+  }
+
   Future<void> updateGenderInDatabase(
     String gender,
     BuildContext context,
