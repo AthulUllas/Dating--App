@@ -1,20 +1,17 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:matrimony/features/auth/service/firebase_services.dart';
 import 'package:matrimony/features/home/service/database_service.dart';
 import 'package:matrimony/features/profile/controller/dp_controller.dart';
 import 'package:matrimony/features/profile/views/widgets/editprofile_field.dart';
 import 'package:matrimony/utils/colors.dart';
 import 'package:matrimony/utils/dimensions.dart';
 import 'package:matrimony/utils/fontstyle.dart';
-import 'package:matrimony/utils/snackbar.dart';
 
 class EditprofilePage extends HookConsumerWidget {
   const EditprofilePage({super.key});
@@ -29,8 +26,6 @@ class EditprofilePage extends HookConsumerWidget {
     final currentUserUid = FirebaseAuth.instance.currentUser!.uid;
     final nameController = useTextEditingController();
     final phoneController = useTextEditingController();
-    final emailController = useTextEditingController();
-    // final passwordController = useTextEditingController();
     final sides = Dimensions();
     final size = MediaQuery.of(context).size;
     Future<void> pickImage() async {
@@ -46,7 +41,6 @@ class EditprofilePage extends HookConsumerWidget {
 
     final List<String> genderList = ['Male', 'Female', 'Other'];
     String? selectedGender;
-    final auth = FirebaseServices();
 
     return Scaffold(
       backgroundColor: colors.scaffoldBackgroundColor,
@@ -59,7 +53,7 @@ class EditprofilePage extends HookConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            SizedBox(height: size.height * 0.06),
+            SizedBox(height: size.height * 0.03),
             Stack(
               alignment: AlignmentDirectional.center,
               children: [
@@ -136,80 +130,6 @@ class EditprofilePage extends HookConsumerWidget {
               },
             ),
             SizedBox(height: size.height * 0.05),
-            FutureBuilder(
-              future: databaseFieldServices.getUserField(
-                currentUserUid,
-                'email',
-              ),
-              builder: (context, snapshot) {
-                final email = snapshot.data;
-                return EditprofileField(
-                  hintText: email ?? "E-mail",
-                  controller: emailController,
-                  type: TextInputType.emailAddress,
-                  field: "E-mail",
-                  leading: Clarity.email_line,
-                  trailing: GestureDetector(
-                    onTap: () async {
-                      debugPrint("Tappedd");
-                      debugPrint(
-                        "<------------${FirebaseAuth.instance.currentUser!.email}---------------->",
-                      );
-                      // await auth.reAuthenticateUser(
-                      //   emailController.text.trim(),
-                      //   passwordController.text.trim(),
-                      // );
-                      final isEmailChanged = await auth.updateUserEmail(
-                        emailController.text.trim(),
-                      );
-                      isEmailChanged!
-                          ? snackBar("Changed", context, 2, FlashPosition.top)
-                          : snackBar("Errorrrr", context, 2, FlashPosition.top);
-                    },
-                    child: Icon(Icons.done, size: 22),
-                  ),
-                );
-              },
-            ),
-            SizedBox(height: size.height * 0.05),
-            // Row(
-            //   children: [
-            //     Padding(
-            //       padding: EdgeInsets.only(left: 40),
-            //       child: Text(
-            //         "* Enter password also if you want to update e-mail",
-            //         style: GoogleFonts.balooChettan2(),
-            //       ),
-            //     ),
-            //   ],
-            // ),
-            // SizedBox(height: 10),
-            // EditprofileField(
-            //   hintText: "Password",
-            //   controller: passwordController,
-            //   type: TextInputType.visiblePassword,
-            //   field: "Current Password",
-            //   leading: Clarity.lock_line,
-            //   trailing: GestureDetector(
-            //     onTap: () async {
-            //       debugPrint("Tappedd");
-            //       debugPrint(
-            //         "<------------${FirebaseAuth.instance.currentUser!.email}---------------->",
-            //       );
-            // await auth.reAuthenticateUser(
-            //   emailController.text.trim(),
-            //   passwordController.text.trim(),
-            // );
-            // final isEmailChanged = await auth.updateUserEmail(
-            //   emailController.text.trim(),
-            //     );
-            //     isEmailChanged!
-            //         ? snackBar("Changed", context, 2, FlashPosition.top)
-            //         : snackBar("Errorrrr", context, 2, FlashPosition.top);
-            //   },
-            //   child: Icon(Icons.done, size: 22),
-            // ),
-            // ),
             FutureBuilder(
               future: databaseFieldServices.getUserField(
                 currentUserUid,
