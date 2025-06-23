@@ -39,7 +39,7 @@ class FirebaseServices {
       );
       return true;
     } catch (e) {
-      snackBar(e.toString(), context, 2, FlashPosition.top);
+      snackBar(e.toString(), context, 3, FlashPosition.top);
       return false;
     }
   }

@@ -14,6 +14,7 @@ import 'package:matrimony/features/userdetails/services/getstorage_service.dart'
 import 'package:matrimony/features/userdetails/services/location_service.dart';
 import 'package:matrimony/features/userdetails/view/pages/gender_page.dart';
 import 'package:matrimony/utils/colors.dart';
+import 'package:matrimony/utils/material_banner.dart';
 import 'package:matrimony/utils/snackbar.dart';
 
 class UserDetailsPage extends HookWidget {
@@ -171,12 +172,7 @@ class UserDetailsPage extends HookWidget {
                       );
                     }
                   } else {
-                    snackBar(
-                      "Please agree to the terms",
-                      context,
-                      2,
-                      FlashPosition.top,
-                    );
+                    banner("Please agree to the terms", context, 2);
                   }
                 } else {
                   snackBar(

@@ -17,6 +17,7 @@ import 'package:matrimony/features/userdetails/view/pages/userdetails_page.dart'
 import 'package:matrimony/utils/colors.dart';
 import 'package:matrimony/utils/dimensions.dart';
 import 'package:matrimony/utils/fontstyle.dart';
+import 'package:matrimony/utils/material_banner.dart';
 import 'package:matrimony/utils/snackbar.dart';
 
 class SigninPage extends HookWidget {
@@ -127,7 +128,7 @@ class SigninPage extends HookWidget {
                         ),
                         (route) => false,
                       );
-                      snackBar("Signed In", context, 1, FlashPosition.bottom);
+                      banner("Signed In", context, 1);
                     }
                   } else {
                     snackBar(
@@ -182,7 +183,7 @@ class SigninPage extends HookWidget {
                     "No location",
                   );
                 } else {
-                  snackBar("Error signing in", context, 2, FlashPosition.top);
+                  banner("Error signing in", context, 3);
                 }
                 final currentUser = FirebaseAuth.instance.currentUser;
                 debugPrint(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:matrimony/utils/colors.dart';
 
-void banner(String message, BuildContext context) {
+void banner(String message, BuildContext context, int duration) {
   final colors = Colours();
   ScaffoldMessenger.of(context).showMaterialBanner(
     MaterialBanner(
@@ -23,7 +23,7 @@ void banner(String message, BuildContext context) {
       backgroundColor: colors.secondaryColor,
     ),
   );
-  Future.delayed(Duration(milliseconds: 700), () {
+  Future.delayed(Duration(seconds: duration), () {
     hideBanner(context);
   });
 }

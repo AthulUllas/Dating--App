@@ -16,6 +16,7 @@ import 'package:matrimony/features/userdetails/view/pages/userdetails_page.dart'
 import 'package:matrimony/utils/colors.dart';
 import 'package:matrimony/utils/dimensions.dart';
 import 'package:matrimony/utils/fontstyle.dart';
+import 'package:matrimony/utils/material_banner.dart';
 import 'package:matrimony/utils/snackbar.dart';
 
 class Signuppage extends HookWidget {
@@ -196,7 +197,7 @@ class Signuppage extends HookWidget {
                     "Location null",
                   );
                 } else {
-                  snackBar("Login failed", context, 1, FlashPosition.top);
+                  banner("Login failed", context, 3);
                 }
               },
               child: GoogleSigninButton(),
