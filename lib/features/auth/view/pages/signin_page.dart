@@ -1,6 +1,5 @@
 import 'package:animations/animations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,7 +17,6 @@ import 'package:matrimony/utils/colors.dart';
 import 'package:matrimony/utils/dimensions.dart';
 import 'package:matrimony/utils/fontstyle.dart';
 import 'package:matrimony/utils/material_banner.dart';
-import 'package:matrimony/utils/snackbar.dart';
 
 class SigninPage extends HookWidget {
   const SigninPage({super.key});
@@ -128,23 +126,13 @@ class SigninPage extends HookWidget {
                         ),
                         (route) => false,
                       );
-                      banner("Signed In", context, 1);
+                      banner("Signed In", 1);
                     }
                   } else {
-                    snackBar(
-                      "Password atleast 6 character",
-                      context,
-                      2,
-                      FlashPosition.top,
-                    );
+                    banner("Password atleast 6 characters", 2);
                   }
                 } else {
-                  snackBar(
-                    "Enter correct email",
-                    context,
-                    1,
-                    FlashPosition.top,
-                  );
+                  banner("Enter correct email", 2);
                 }
               },
               child: ContinueButton(),
@@ -183,7 +171,7 @@ class SigninPage extends HookWidget {
                     "No location",
                   );
                 } else {
-                  banner("Error signing in", context, 3);
+                  banner("Error signing in", 3);
                 }
                 final currentUser = FirebaseAuth.instance.currentUser;
                 debugPrint(

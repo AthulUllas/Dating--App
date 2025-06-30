@@ -1,6 +1,5 @@
 import 'package:animations/animations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -17,7 +16,6 @@ import 'package:matrimony/utils/colors.dart';
 import 'package:matrimony/utils/dimensions.dart';
 import 'package:matrimony/utils/fontstyle.dart';
 import 'package:matrimony/utils/material_banner.dart';
-import 'package:matrimony/utils/snackbar.dart';
 
 class Signuppage extends HookWidget {
   const Signuppage({super.key});
@@ -145,20 +143,10 @@ class Signuppage extends HookWidget {
                       );
                     }
                   } else {
-                    snackBar(
-                      "Password atleast 6 characters",
-                      context,
-                      2,
-                      FlashPosition.top,
-                    );
+                    banner("Password atleast 6 characters", 2);
                   }
                 } else {
-                  snackBar(
-                    "Enter the correct email",
-                    context,
-                    2,
-                    FlashPosition.top,
-                  );
+                  banner("Password atleast 6 characters", 2);
                 }
               },
               child: ContinueButton(),
@@ -197,7 +185,7 @@ class Signuppage extends HookWidget {
                     "Location null",
                   );
                 } else {
-                  banner("Login failed", context, 3);
+                  banner("Login failed", 3);
                 }
               },
               child: GoogleSigninButton(),

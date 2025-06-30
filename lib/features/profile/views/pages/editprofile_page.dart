@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -17,7 +16,6 @@ import 'package:matrimony/utils/colors.dart';
 import 'package:matrimony/utils/dimensions.dart';
 import 'package:matrimony/utils/fontstyle.dart';
 import 'package:matrimony/utils/material_banner.dart';
-import 'package:matrimony/utils/snackbar.dart';
 
 class EditprofilePage extends HookConsumerWidget {
   const EditprofilePage({super.key});
@@ -211,33 +209,37 @@ class EditprofilePage extends HookConsumerWidget {
             SizedBox(height: size.height * 0.05),
             GestureDetector(
               onTap: () {
-                if (nameController.text.trim().isNotEmpty &&
-                    phoneController.text.trim().isNotEmpty &&
-                    selectedGender!.isNotEmpty) {
-                  nameStorage.write('name', nameController.text.trim());
-                  phoneStorage.write('phone', phoneController.text.trim());
-                  genderStorage.write('gender', selectedGender);
-                  if (imageFile.value!.path.isNotEmpty) {
-                    dpStorage.write('dp', imageFile.value!.path);
+                if (phoneController.text.trim().length >= 10) {
+                  if (nameController.text.trim().isNotEmpty &&
+                      phoneController.text.trim().isNotEmpty &&
+                      selectedGender!.isNotEmpty) {
+                    nameStorage.write('name', nameController.text.trim());
+                    phoneStorage.write('phone', phoneController.text.trim());
+                    genderStorage.write('gender', selectedGender);
+                    try {
+                      String? imagePath = imageFile.value?.path;
+                      if (imagePath!.isNotEmpty) {
+                        dpStorage.write('dp', imageFile.value!.path);
+                      }
+                    } catch (e) {
+                      debugPrint(e.toString());
+                    }
+                    databaseServices.updateNameAndPhone(
+                      nameController.text.trim(),
+                      phoneController.text.trim(),
+                      context,
+                    );
+                    databaseServices.updateGenderInDatabase(
+                      selectedGender ?? "Gender Empty",
+                      context,
+                    );
+                    Navigator.of(context).pop();
+                    banner("Updated", 3);
+                  } else {
+                    banner("Fill all the fields", 2);
                   }
-                  databaseServices.updateNameAndPhone(
-                    nameController.text.trim(),
-                    phoneController.text.trim(),
-                    context,
-                  );
-                  databaseServices.updateGenderInDatabase(
-                    selectedGender ?? "",
-                    context,
-                  );
-                  Navigator.of(context).pop();
-                  banner("Updated", context, 3);
                 } else {
-                  snackBar(
-                    "Fill all the fields",
-                    context,
-                    2,
-                    FlashPosition.top,
-                  );
+                  banner("Enter correct phone number", 2);
                 }
               },
               child: ContinueButton(),

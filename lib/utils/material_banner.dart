@@ -1,33 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:matrimony/utils/colors.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
-void banner(String message, BuildContext context, int duration) {
-  final colors = Colours();
-  ScaffoldMessenger.of(context).showMaterialBanner(
-    MaterialBanner(
-      content: Text(message),
-      contentTextStyle: GoogleFonts.anekDevanagari(
-        color: colors.primaryTextColor,
-        fontSize: 18,
-        fontWeight: FontWeight.w500,
-      ),
-      actions: [
-        TextButton(
-          onPressed: () {
-            ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-          },
-          child: Text("Dismiss"),
-        ),
-      ],
-      backgroundColor: colors.secondaryColor,
-    ),
-  );
+void banner(String message, int duration) {
+  Fluttertoast.showToast(msg: message, toastLength: Toast.LENGTH_SHORT);
   Future.delayed(Duration(seconds: duration), () {
-    hideBanner(context);
+    hideBanner();
   });
 }
 
-void hideBanner(BuildContext context) {
-  ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+void hideBanner() {
+  Fluttertoast.cancel();
 }

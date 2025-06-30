@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash/flash.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:matrimony/utils/material_banner.dart';
 import 'package:matrimony/utils/snackbar.dart';
 
 class FirebaseServices {
@@ -17,7 +18,7 @@ class FirebaseServices {
         password: password,
       );
       await FirebaseAuth.instance.currentUser?.sendEmailVerification();
-      snackBar("Verify email and Sign In", context, 2, FlashPosition.top);
+      banner("Check mail and Sign In", 3);
       await FirebaseAuth.instance.currentUser?.reload();
 
       return true;

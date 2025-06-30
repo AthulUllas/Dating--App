@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:animations/animations.dart';
-import 'package:flash/flash.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -15,7 +14,6 @@ import 'package:matrimony/features/userdetails/services/location_service.dart';
 import 'package:matrimony/features/userdetails/view/pages/gender_page.dart';
 import 'package:matrimony/utils/colors.dart';
 import 'package:matrimony/utils/material_banner.dart';
-import 'package:matrimony/utils/snackbar.dart';
 
 class UserDetailsPage extends HookWidget {
   const UserDetailsPage({super.key});
@@ -164,23 +162,13 @@ class UserDetailsPage extends HookWidget {
                         "<_--------------------------------------------$location----------------------------------------_>",
                       );
                     } else {
-                      snackBar(
-                        "Textfield empty",
-                        context,
-                        1,
-                        FlashPosition.top,
-                      );
+                      banner("Textfield Empty", 2);
                     }
                   } else {
-                    banner("Please agree to the terms", context, 2);
+                    banner("Please agree to the terms", 2);
                   }
                 } else {
-                  snackBar(
-                    "Enter correct phone number",
-                    context,
-                    1,
-                    FlashPosition.top,
-                  );
+                  banner("Enter correct phone number", 2);
                 }
               },
               child: ContinueButton(),

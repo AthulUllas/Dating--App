@@ -95,6 +95,6 @@ Future<void> checkUserExists(BuildContext context) async {
       debugPrint(e.toString());
     }
   } else {
-    banner("No internet connection", context, 5);
+    banner("No internet connection", 5);
   }
 }
