@@ -209,37 +209,42 @@ class EditprofilePage extends HookConsumerWidget {
             SizedBox(height: size.height * 0.05),
             GestureDetector(
               onTap: () {
-                if (phoneController.text.trim().length >= 10) {
-                  if (nameController.text.trim().isNotEmpty &&
-                      phoneController.text.trim().isNotEmpty &&
-                      selectedGender!.isNotEmpty) {
-                    nameStorage.write('name', nameController.text.trim());
+                if (nameController.text.trim().isNotEmpty) {
+                  nameStorage.write('name', nameController.text.trim());
+                  databaseServices.updateUserField(
+                    'name',
+                    nameController.text.trim(),
+                  );
+                }
+                if (phoneController.text.trim().isNotEmpty) {
+                  if (phoneController.text.trim().length >= 10) {
                     phoneStorage.write('phone', phoneController.text.trim());
-                    genderStorage.write('gender', selectedGender);
-                    try {
-                      String? imagePath = imageFile.value?.path;
-                      if (imagePath!.isNotEmpty) {
-                        dpStorage.write('dp', imageFile.value!.path);
-                      }
-                    } catch (e) {
-                      debugPrint(e.toString());
-                    }
-                    databaseServices.updateNameAndPhone(
-                      nameController.text.trim(),
+                    databaseServices.updateUserField(
+                      'phone',
                       phoneController.text.trim(),
-                      context,
                     );
-                    databaseServices.updateGenderInDatabase(
-                      selectedGender ?? "Gender Empty",
-                      context,
-                    );
-                    Navigator.of(context).pop();
-                    banner("Updated", 3);
+                    phoneController.clear();
                   } else {
-                    banner("Fill all the fields", 2);
+                    banner("Enter correct phone number", 3);
                   }
-                } else {
-                  banner("Enter correct phone number", 2);
+                }
+                if (selectedGender!.isNotEmpty) {
+                  genderStorage.write('gender', selectedGender);
+                  databaseServices.updateUserField('gender', selectedGender!);
+                  try {
+                    String? imagePath = imageFile.value?.path;
+                    if (imagePath!.isNotEmpty) {
+                      dpStorage.write('dp', imageFile.value!.path);
+                    }
+                  } catch (e) {
+                    debugPrint(
+                      "<-------------------------------${e.toString()}------------------------------>",
+                    );
+                  }
+                }
+                if (phoneController.text.trim().isEmpty) {
+                  Navigator.pop(context);
+                  banner("Updated", 3);
                 }
               },
               child: ContinueButton(),

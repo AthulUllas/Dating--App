@@ -36,6 +36,20 @@ class DatabaseServices {
     }
   }
 
+  Future<void> updateUserField(String key, String field) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      try {
+        final uid = user.uid;
+        FirebaseFirestore.instance.collection('users').doc(uid).update({
+          key: field,
+        });
+      } catch (e) {
+        debugPrint(e.toString());
+      }
+    }
+  }
+
   Future<void> updateUserDetailsInDatabase(
     String name,
     String phone,
