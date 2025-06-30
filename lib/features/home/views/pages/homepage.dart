@@ -27,7 +27,6 @@ class Homepage extends HookWidget {
     final size = MediaQuery.of(context).size;
     final sides = Dimensions();
     final currentUserUid = FirebaseAuth.instance.currentUser?.uid;
-    final favoritedIndex = useState<int?>(null);
     Future<void> onRefresh() async {
       await databaseFieldService.getGenderSpecifiedUsers(
         gender.value,
@@ -176,7 +175,6 @@ class Homepage extends HookWidget {
                   child: ListView.builder(
                     itemCount: users?.length,
                     itemBuilder: (context, index) {
-                      final isFavorited = favoritedIndex.value == index;
                       final user = users?[index];
                       final name = user?['name'];
                       final hidedText = hideText(name);
@@ -218,16 +216,8 @@ class Homepage extends HookWidget {
                                 icon: Icon(Clarity.phone_handset_solid),
                               ),
                               IconButton(
-                                onPressed: () {
-                                  favoritedIndex.value = isFavorited
-                                      ? null
-                                      : index;
-                                },
-                                icon: Icon(
-                                  isFavorited
-                                      ? Clarity.favorite_solid
-                                      : Clarity.favorite_line,
-                                ),
+                                onPressed: () {},
+                                icon: Icon(Clarity.favorite_line),
                               ),
                               SizedBox(width: size.width * 0.008),
                             ],
