@@ -12,6 +12,7 @@ import 'package:matrimony/features/profile/controller/name_controller.dart';
 import 'package:matrimony/features/profile/controller/phone_controller.dart';
 import 'package:matrimony/features/profile/views/pages/editprofile_page.dart';
 import 'package:matrimony/features/profile/views/widgets/custom_divider.dart';
+import 'package:matrimony/features/userdetails/services/getstorage_service.dart';
 import 'package:matrimony/utils/colors.dart';
 import 'package:matrimony/utils/dimensions.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -226,6 +227,12 @@ class ProfilePage extends ConsumerWidget {
                       visualDensity: VisualDensity(vertical: 2),
                       onTap: () {
                         authServices.signOutUser();
+                        nameStorage.erase();
+                        phoneStorage.erase();
+                        dpStorage.erase();
+                        genderStorage.erase();
+                        locationStorage.erase();
+                        locationPlusCodeStorage.erase();
                         Navigator.of(context).pushAndRemoveUntil(
                           PageRouteBuilder(
                             pageBuilder:

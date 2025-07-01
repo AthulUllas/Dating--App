@@ -8,10 +8,10 @@ import 'package:matrimony/features/splash/view/splashscreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  GetStorage.init('dp');
   GetStorage.init('name');
   GetStorage.init('phone');
   GetStorage.init('gender');
-  GetStorage.init('dp');
   GetStorage.init('location');
   GetStorage.init('locationpluscode');
   if (Firebase.apps.isEmpty) {
