@@ -13,6 +13,7 @@ import 'package:matrimony/features/profile/controller/phone_controller.dart';
 import 'package:matrimony/features/profile/views/pages/editprofile_page.dart';
 import 'package:matrimony/features/profile/views/widgets/custom_divider.dart';
 import 'package:matrimony/features/userdetails/services/getstorage_service.dart';
+import 'package:matrimony/utils/alertbox.dart';
 import 'package:matrimony/utils/colors.dart';
 import 'package:matrimony/utils/dimensions.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -233,28 +234,38 @@ class ProfilePage extends ConsumerWidget {
                         genderStorage.erase();
                         locationStorage.erase();
                         locationPlusCodeStorage.erase();
-                        Navigator.of(context).pushAndRemoveUntil(
-                          PageRouteBuilder(
-                            pageBuilder:
-                                (context, animation, secondaryAnimation) =>
-                                    SigninPage(),
-                            transitionsBuilder:
-                                (
-                                  context,
-                                  animation,
-                                  secondaryAnimation,
-                                  child,
-                                ) {
-                                  return SharedAxisTransition(
-                                    animation: animation,
-                                    secondaryAnimation: secondaryAnimation,
-                                    transitionType:
-                                        SharedAxisTransitionType.horizontal,
-                                    child: child,
-                                  );
-                                },
-                          ),
-                          (route) => false,
+                        alerBox(
+                          context,
+                          () {
+                            Navigator.of(context).pop();
+                          },
+                          () {
+                            Navigator.of(context).pushAndRemoveUntil(
+                              PageRouteBuilder(
+                                pageBuilder:
+                                    (context, animation, secondaryAnimation) =>
+                                        SigninPage(),
+                                transitionsBuilder:
+                                    (
+                                      context,
+                                      animation,
+                                      secondaryAnimation,
+                                      child,
+                                    ) {
+                                      return SharedAxisTransition(
+                                        animation: animation,
+                                        secondaryAnimation: secondaryAnimation,
+                                        transitionType:
+                                            SharedAxisTransitionType.horizontal,
+                                        child: child,
+                                      );
+                                    },
+                              ),
+                              (route) => false,
+                            );
+                          },
+                          "Logout?",
+                          "Are you sure you want to logout ?",
                         );
                       },
                     ),

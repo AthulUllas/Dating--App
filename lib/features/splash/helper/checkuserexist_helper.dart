@@ -12,8 +12,8 @@ Future<void> checkUserExists(BuildContext context) async {
   await Future.delayed(Duration(seconds: 2));
   final user = FirebaseAuth.instance.currentUser;
   final databaseServices = DatabaseServices();
-  final isConnected = checkConnectivity();
-  if (await isConnected) {
+  final isConnected = await checkConnectivity();
+  if (isConnected) {
     try {
       if (user != null) {
         final location = await getCurrentLocation(context);
