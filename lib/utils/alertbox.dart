@@ -1,5 +1,7 @@
-import 'package:animated_confirm_dialog/animated_confirm_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:icons_plus/icons_plus.dart';
+import 'package:material_dialogs/material_dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
 
 void alerBox(
   BuildContext context,
@@ -8,14 +10,26 @@ void alerBox(
   String title,
   String message,
 ) {
-  showCustomDialog(
+  Dialogs.materialDialog(
     context: context,
-    onCancel: onCancel,
-    onConfirm: onConfirm,
     title: title,
-    message: message,
-    cancelButtonText: 'No',
-    confirmButtonText: 'Yes',
-    cancelButtonColor: Colors.red,
+    msg: message,
+    color: Colors.white,
+    actionsBuilder: (context) {
+      return Row(
+        children: [
+          IconsOutlineButton(
+            onPressed: onCancel,
+            text: 'Cancel',
+            iconData: Clarity.cancel_line,
+          ),
+          IconsOutlineButton(
+            onPressed: onConfirm,
+            text: 'Yes',
+            iconData: Icons.done,
+          ),
+        ],
+      );
+    },
   );
 }

@@ -34,7 +34,7 @@ dependencies:
   pull_to_refresh: ^2.0.0
   hooks_riverpod: ^2.6.1
   fluttertoast: ^8.2.12
-  animated_confirm_dialog: ^1.0.2
+  material_dialogs: ^1.1.5
 
 dev_dependencies:
   flutter_test:

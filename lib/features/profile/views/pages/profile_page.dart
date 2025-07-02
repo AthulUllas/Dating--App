@@ -16,6 +16,7 @@ import 'package:matrimony/features/userdetails/services/getstorage_service.dart'
 import 'package:matrimony/utils/alertbox.dart';
 import 'package:matrimony/utils/colors.dart';
 import 'package:matrimony/utils/dimensions.dart';
+import 'package:matrimony/utils/material_banner.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class ProfilePage extends ConsumerWidget {
@@ -263,6 +264,7 @@ class ProfilePage extends ConsumerWidget {
                               ),
                               (route) => false,
                             );
+                            banner("Logged out", 3);
                           },
                           "Logout?",
                           "Are you sure you want to logout ?",
